@@ -19,7 +19,7 @@ class UserControllerTest extends WebTestCase
 
     public function testGet()
     {
-        $user = new User();
+        $user = $this->newUser();
         $user->setEmail('foo@bar.com')->setUsername('toni')->setPassword('foo');
         $this->createUser($user);
 
