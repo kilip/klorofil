@@ -1,6 +1,4 @@
 language: php
-services:
-    - mysql
 git:
     depth: 1
 matrix:
@@ -10,6 +8,7 @@ matrix:
 
 before_script:
     - stty cols 120
+    - echo "memory_limit=1024M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     - mysql -e 'create database symfony'
     - composer install --dev --no-interaction
     # coveralls preparation
