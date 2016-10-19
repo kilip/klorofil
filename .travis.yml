@@ -1,4 +1,6 @@
 language: php
+services:
+    - mysql
 git:
     depth: 1
 matrix:
@@ -8,6 +10,7 @@ matrix:
 
 before_script:
     - stty cols 120
+    - mysql -e 'create database symfony'
     - composer install --dev --no-interaction
     # coveralls preparation
     - composer require satooshi/php-coveralls
