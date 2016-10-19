@@ -1,4 +1,6 @@
-demo
+Demo Application
 ====
 
-A Symfony project created on October 19, 2016, 1:26 pm.
+[![Build Status](https://travis-ci.org/kilip/demo.svg?branch=master)](https://travis-ci.org/kilip/demo)
+
+My Demo Application
