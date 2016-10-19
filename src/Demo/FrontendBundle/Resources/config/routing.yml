@@ -1,0 +1,6 @@
+frontend:
+    resource: "@FrontendBundle/Controller/"
+    type:     annotation
+
+backend:
+    resource: "@BackendBundle/Resources/config/routing.yml"
