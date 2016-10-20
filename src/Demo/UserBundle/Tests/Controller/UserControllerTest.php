@@ -6,6 +6,7 @@ use Demo\BackendBundle\Test\DemoTestCase;
 use Demo\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Demo\BackendBundle\Test\ResponseAsserter;
 
 class UserControllerTest extends DemoTestCase
 {
@@ -34,7 +35,32 @@ class UserControllerTest extends DemoTestCase
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ],$data);
         $response = $client->getResponse();
+
         $this->assertEquals(Response::HTTP_CREATED,$response->getStatusCode());
+        ResponseAsserter::assertResponsePropertiesExist($response,['username']);
+    }
+
+    public function testCreateError()
+    {
+        $data = [
+            'fullname' => 'Hello World',
+            'username' => 'test_create',
+            'email' => 'foo@bar.com',
+            'plainPassword' => [
+                'first' => 'foo',
+                'second' => 'bar'
+            ]
+        ];
+        $data = json_encode($data);
+        $client = static::createClient();
+        $client->request('POST','/api/user',[],[],[
+            'Accept'=>'application/json',
+            'HTTP_X-Requested-With' => 'XMLHttpRequest',
+        ],$data);
+        $response = $client->getResponse();
+
+        $this->assertEquals(Response::HTTP_BAD_REQUEST,$response->getStatusCode());
+        ResponseAsserter::assertResponsePropertiesExist($response,['data.username']);
     }
 
     public function testGet()
@@ -51,8 +77,6 @@ class UserControllerTest extends DemoTestCase
 
 
         $this->assertEquals(200,$response->getStatusCode());
-        $this->assertContains('toni',$response->getContent());
-        $this->assertContains($user->getFullname(),$response->getContent());
-        $this->assertContains($user->getEmail(),$response->getContent());
+        ResponseAsserter::assertResponsePropertiesExist($response,['username']);
     }
 }
