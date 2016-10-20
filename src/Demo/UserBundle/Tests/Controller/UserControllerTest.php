@@ -4,7 +4,8 @@ namespace Demo\UserBundle\Tests\Controller;
 
 use Demo\BackendBundle\Test\DemoTestCase;
 use Demo\UserBundle\Entity\User;
-
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserControllerTest extends DemoTestCase
 {
@@ -15,7 +16,25 @@ class UserControllerTest extends DemoTestCase
 
     public function testCreate()
     {
-
+        $helper = $this->getService('demo.test.user_helper');
+        $helper->delete('test_create');
+        $data = [
+            'fullname' => 'Hello World',
+            'username' => 'test_create',
+            'email' => 'foo@bar.com',
+            'plainPassword' => [
+                'first' => 'foo',
+                'second' => 'foo'
+            ]
+        ];
+        $data = json_encode($data);
+        $client = static::createClient();
+        $client->request('POST','/api/user',[],[],[
+            'Accept'=>'application/json',
+            'HTTP_X-Requested-With' => 'XMLHttpRequest',
+        ],$data);
+        $response = $client->getResponse();
+        $this->assertEquals(Response::HTTP_CREATED,$response->getStatusCode());
     }
 
     public function testGet()
@@ -24,11 +43,16 @@ class UserControllerTest extends DemoTestCase
         $user = $helper->create('toni','foo');
 
         $client = static::createClient();
-        $crawler = $client->request('GET', '/api/user/toni');
+        $client->request('GET', '/api/user/toni',[],[],[
+            'Accept'=>'application/json',
+            'HTTP_X-Requested-With' => 'XMLHttpRequest',
+        ]);
         $response = $client->getResponse();
+
 
         $this->assertEquals(200,$response->getStatusCode());
         $this->assertContains('toni',$response->getContent());
         $this->assertContains($user->getFullname(),$response->getContent());
+        $this->assertContains($user->getEmail(),$response->getContent());
     }
 }

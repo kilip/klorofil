@@ -65,4 +65,12 @@ class UserTestHelper
 
         return $user;
     }
+
+    public function delete($username)
+    {
+        $manager = $this->manager;
+        if(!is_null($user = $manager->findUserByUsername($username))){
+            $manager->deleteUser($user);
+        }
+    }
 }
