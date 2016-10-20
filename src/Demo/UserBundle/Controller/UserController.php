@@ -21,29 +21,29 @@ class UserController extends FOSRestController
         $data = json_decode($request->getContent(),true);
         $form = $this->createForm(RegistrationType::class,$user);
         $form->submit($data);
-        if($form->isValid()){
-            $manager = $this->get('fos_user.user_manager');
-            $manager->updateUser($user);
-            $view = $this->view($user,Response::HTTP_CREATED);
-        }else{
+        if(!$form->isValid()){
             $data = [
                 'errors' => $this->getErrorsFromForm($form),
                 'type' => 'validation_error',
                 'title' => 'There was a validation error',
                 'data' => $form->getData()
             ];
-            $view = $this->view($data,Response::HTTP_BAD_REQUEST);
+            return $this->view($data,Response::HTTP_BAD_REQUEST);
         }
 
+        $manager = $this->get('fos_user.user_manager');
+        $manager->updateUser($user);
+        $view = $this->view($user,Response::HTTP_CREATED);
+        $view->getResponse()->headers->set('Location',$this->generateUrl('api_user_get',['username' => $user->getUsername()]));
         return $view;
     }
 
     /**
-     * @Rest\Get("/user/{name}",name="user_get")
+     * @Rest\Get("/user/{username}",name="api_user_get")
      */
-    public function showAction($name)
+    public function showAction($username)
     {
-        $user = $this->get('fos_user.user_manager')->findUserByUsername($name);
+        $user = $this->get('fos_user.user_manager')->findUserByUsername($username);
         $view = $this->view($user,Response::HTTP_OK);
         return $this->handleView($view);
     }

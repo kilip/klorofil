@@ -3,8 +3,7 @@
 namespace Demo\UserBundle\Tests\Controller;
 
 use Demo\BackendBundle\Test\DemoTestCase;
-use Demo\UserBundle\Entity\User;
-use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\HttpFoundation\Response;
 use Demo\BackendBundle\Test\ResponseAsserter;
 
@@ -37,6 +36,8 @@ class UserControllerTest extends DemoTestCase
         $response = $client->getResponse();
 
         $this->assertEquals(Response::HTTP_CREATED,$response->getStatusCode());
+        $this->assertTrue($response->hasHeader('Location'));
+        $this->assertContains('/api/user/test_create',$response->getHeader('Location'));
         ResponseAsserter::assertResponsePropertiesExist($response,['username']);
     }
 
@@ -77,6 +78,6 @@ class UserControllerTest extends DemoTestCase
 
 
         $this->assertEquals(200,$response->getStatusCode());
-        ResponseAsserter::assertResponsePropertiesExist($response,['username']);
+        ResponseAsserter::assertResponsePropertyEquals($response,'username','toni');
     }
 }
