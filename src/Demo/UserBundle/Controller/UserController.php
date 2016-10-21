@@ -12,9 +12,11 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Class UserController
+ * @Security("is_granted('ROLE_USER')")
  * @package Demo\UserBundle\Controller
  */
 class UserController extends FOSRestController

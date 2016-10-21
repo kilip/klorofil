@@ -39,7 +39,7 @@ class UserTestHelper
         return $this->manager;
     }
 
-    public function create($username,$password,$email=null,$fullname=null)
+    public function create($username,$password,$email=null,$fullname=null,$role='ROLE_USER')
     {
         $faker = Faker::create();
         $manager = $this->manager;
@@ -58,9 +58,13 @@ class UserTestHelper
         $user->setFullname($fullname);
         $user
             ->setUsername($username)
-            ->setPassword($password)
+            ->setPlainPassword($password)
             ->setEmail($email)
+            ->setEnabled(true)
         ;
+        if(!$user->hasRole($role)){
+            $user->addRole($role);
+        }
         $manager->updateUser($user);
 
         return $user;
