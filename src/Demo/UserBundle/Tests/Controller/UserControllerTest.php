@@ -14,6 +14,18 @@ class UserControllerTest extends DemoTestCase
         parent::setUp();
     }
 
+    public function testList()
+    {
+        $helper = $this->getService('demo.test.user_helper');
+        $helper->create('toni','foo');
+
+        $client = static::createClient();
+        $client->request('GET','/api/users?sorting[id]=ASC');
+        $response = $client->getResponse();
+        $this->assertEquals(Response::HTTP_OK,$response->getStatusCode());
+        ResponseAsserter::assertResponsePropertyEquals($response,'_embedded.items[0].username','test_create');
+    }
+
     public function testCreate()
     {
         $helper = $this->getService('demo.test.user_helper');
@@ -29,7 +41,7 @@ class UserControllerTest extends DemoTestCase
         ];
         $data = json_encode($data);
         $client = static::createClient();
-        $client->request('POST','/api/user',[],[],[
+        $client->request('POST','/api/users',[],[],[
             'Accept'=>'application/json',
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ],$data);
@@ -37,7 +49,7 @@ class UserControllerTest extends DemoTestCase
 
         $this->assertEquals(Response::HTTP_CREATED,$response->getStatusCode());
         $this->assertTrue($response->hasHeader('Location'));
-        $this->assertContains('/api/user/test_create',$response->getHeader('Location'));
+        $this->assertContains('/api/users/test_create',$response->getHeader('Location'));
         ResponseAsserter::assertResponsePropertiesExist($response,['username']);
     }
 
@@ -54,7 +66,7 @@ class UserControllerTest extends DemoTestCase
         ];
         $data = json_encode($data);
         $client = static::createClient();
-        $client->request('POST','/api/user',[],[],[
+        $client->request('POST','/api/users',[],[],[
             'Accept'=>'application/json',
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ],$data);
@@ -67,10 +79,10 @@ class UserControllerTest extends DemoTestCase
     public function testGet()
     {
         $helper = $this->getService('demo.test.user_helper');
-        $user = $helper->create('toni','foo');
+        $helper->create('toni','foo');
 
         $client = static::createClient();
-        $client->request('GET', '/api/user/toni',[],[],[
+        $client->request('GET', '/api/users/toni',[],[],[
             'Accept'=>'application/json',
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ]);

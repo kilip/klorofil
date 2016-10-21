@@ -3,3 +3,12 @@ Demo\UserBundle\Entity\User:
     properties:
         fullname:
             expose: true
+
+    relations:
+        -
+            rel: self
+            href:
+                route: api_user_get
+                parameters:
+                    username: expr(object.getUsername())
+                absolute: true

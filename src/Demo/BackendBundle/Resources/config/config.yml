@@ -3,6 +3,7 @@ imports:
 
 framework:
     csrf_protection: false #only use for public API
+    translator:      { fallbacks: ["%locale%"] }
 
 fos_rest:
     routing_loader:
@@ -40,6 +41,8 @@ nelmio_cors:
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
             max_age: 3600
 
+nelmio_api_doc:
+
 sensio_framework_extra:
     request: { converters: true }
     view:    { annotations: true }
@@ -55,3 +58,8 @@ jms_serializer:
             DemoUserBundle:
                 namespace_prefix: "Demo\\UserBundle"
                 path: "@UserBundle/Resources/config/serializer"
+
+bazinga_hateoas: ~
+
+nelmio_api_doc:
+    name: "Anthonius Munthi Demo API Documentation"

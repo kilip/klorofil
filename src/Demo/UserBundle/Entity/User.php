@@ -4,12 +4,20 @@ namespace Demo\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * Class User
  *
  * @ORM\Entity
  * @ORM\Table(name="security_user")
+ * @Hateoas\Relation(
+ *     "self",
+ *     href=@Hateoas\Route(
+ *          "api_user_get",
+ *          parameters={"username" = "expr(object.getUsername())"}
+ *     )
+ * )
  * @package Demo\UserBundle\Entity
  */
 class User extends BaseUser
