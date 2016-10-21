@@ -11,6 +11,8 @@ before_install:
     - INI_FILE=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     - echo memory_limit = -1 >> $INI_FILE
     - mysql -e 'create database symfony'
+    - openssl genrsa -out -out var/jwt/private.pem -aes256 4096
+    - openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
 
 install:
     - composer install --dev --no-interaction
