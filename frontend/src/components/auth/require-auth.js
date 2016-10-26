@@ -8,14 +8,7 @@ export default function(ComposedComponent,requiredRoles){
 
     class Authenticate extends React.Component {
         isGranted(){
-            var roles = this.props.auth.user.roles;
-            for(var i=0;i<=roles.length;i++){
-                var role = roles[i];
-                if(requiredRoles.indexOf(role) >=0){
-                    return true;
-                }
-            }
-            return false;
+            return this.props.auth.user.isGranted(requiredRoles);
         }
 
         componentWillMount() {

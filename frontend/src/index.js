@@ -12,6 +12,10 @@ import { setAuthorizationToken,setCurrentUser } from  './components/auth/actions
 import routes from './routes';
 import reducers from './reducers';
 
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:8000/api';
+
 const store = createStore(
     reducers,
     compose(

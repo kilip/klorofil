@@ -4,7 +4,6 @@ import React, {
 } from 'react';
 
 import { Link } from 'react-router';
-import { logout } from '../components/auth/actions';
 import { connect } from 'react-redux';
 import {Navbar,Nav} from 'react-bootstrap';
 
@@ -70,4 +69,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { logout })(NavMain);
+export default connect(mapStateToProps)(NavMain);

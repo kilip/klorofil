@@ -11,16 +11,19 @@ import { logout } from '../components/auth/actions';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'admin-lte/dist/css/AdminLTE.min.css';
 import 'admin-lte/dist/css/skins/_all-skins.min.css';
-
 import NavMain from './NavMain';
-
 class Dashboard extends Component
 {
+    onClick(){
+        console.log(this.props.auth.user.isGranted('ROLE_SUPER_ADMIN'));
+    }
+
     render() {
         return (
             <div>
-                <NavMain />
+                <NavMain logout={logout} />
                 <FlashMessages/>
+                <button onClick={this.onClick.bind(this)}>Click Me</button>
                 {this.props.children}
             </div>
         );
@@ -28,8 +31,15 @@ class Dashboard extends Component
 }
 
 Dashboard.propTypes = {
-    logout: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
 };
+
+function mapStateToProps(state){
+    return {
+        auth: state.auth
+    }
+}
 //Dashboard.defaultProps = {};
 
-export default connect(null, { logout })(Dashboard);
+export default connect(mapStateToProps, { logout })(Dashboard);
