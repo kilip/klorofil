@@ -26,6 +26,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class DemoTestCase extends WebTestCase
 {
+    static protected $authenticatedUsers;
+
     /**
      * @var UserTestHelper
      */
@@ -64,9 +66,12 @@ class DemoTestCase extends WebTestCase
 
     protected function createAuthenticatedClient($role="ROLE_SUPER_ADMIN",$username='testuser',$password='testuser',$email='test@user.com',$fullname='Test User')
     {
-        $user = $this->helperUserCreate($username,$password,$email,$fullname,$role);
+        $id = md5($role.$username);
+        if(!($user=static::$authenticatedUsers[$id])){
+            $user = $this->helperUserCreate($username,$password,$email,$fullname,$role);
+        }
         $client = static::createClient();
-        $client->request('POST',$this->generateUrl('api_login_check'),[
+        $client->request('POST',$this->generateUrl('api_auth_tokens'),[
             'username' => $user->getUsername(),
             'password' => $password,
         ]);
