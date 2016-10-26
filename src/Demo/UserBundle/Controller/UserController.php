@@ -79,44 +79,6 @@ class UserController extends FOSRestController
     }
 
     /**
-     * Create a new user
-     *
-     * @ApiDoc(
-     *     section = "User",
-     *     description = "Create a new user",
-     *     input = "Demo\UserBundle\Form\RegistrationType",
-     *     output = "Demo\UserBundle\Entity\User",
-     *     statusCodes = {
-     *         200 = "Returned when successfull",
-     *         400 = "Returned when validation failed"
-     *     }
-     * )
-     * @Rest\Post("/users",name="api_user_create")
-     */
-    public function createAction(Request $request)
-    {
-        $user = new User();
-        $data = json_decode($request->getContent(),true);
-        $form = $this->createForm(RegistrationType::class,$user);
-        $form->submit($data);
-        if(!$form->isValid()){
-            $data = [
-                'errors' => $this->getErrorsFromForm($form),
-                'type' => 'validation_error',
-                'title' => 'There was a validation error',
-                'data' => $form->getData()
-            ];
-            return $this->view($data,Response::HTTP_BAD_REQUEST);
-        }
-
-        $manager = $this->get('fos_user.user_manager');
-        $manager->updateUser($user);
-        $view = $this->view($user,Response::HTTP_CREATED);
-        $view->getResponse()->headers->set('Location',$this->generateUrl('api_user_get',['username' => $user->getUsername()]));
-        return $view;
-    }
-
-    /**
      * Update existing user
      *
      * @ApiDoc(

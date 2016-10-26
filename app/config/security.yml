@@ -11,34 +11,30 @@ security:
             id: fos_user.user_provider.username
 
     firewalls:
-        #main:
-        #    pattern: ^/
-        #    form_login:
-        #        provider: fos_userbundle
-        #        csrf_token_generator: security.csrf.token_manager
-                # if you are using Symfony < 2.8, use the following config instead:
-                # csrf_provider: form.csrf_provider
-
-        #    logout:       true
-        #    anonymous:    true
-
-        main:
-            pattern:  ^/api
+        dev:
+            pattern:  ^/api/(_(profiler|wdt|doc))/
+            security: false
+        login:
+            pattern:  ^/api/login
             stateless: true
             anonymous: true
             form_login:
-                check_path:               /api/login_check
+                check_path:               api_login_check
                 success_handler:          lexik_jwt_authentication.handler.authentication_success
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
                 require_previous_session: false
-                username_parameter:       username
-                password_parameter:       password
-
+                username_parameter: username
+                password_parameter: password
+        api:
+            pattern:   ^/api/(!token|!doc)
+            stateless: true
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
 
-
     access_control:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY}
+        - { path: ^/api/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }

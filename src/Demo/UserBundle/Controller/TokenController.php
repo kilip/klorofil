@@ -23,7 +23,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 class TokenController extends Controller
 {
     /**
-     * @Rest\Post("/login_check",name="api_login_check")
+     * @Rest\Post("/token",name="api_auth_tokens")
      */
     public function tokenAuthentication(Request $request)
     {
