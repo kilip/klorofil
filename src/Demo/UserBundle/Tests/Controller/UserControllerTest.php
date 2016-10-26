@@ -31,9 +31,9 @@ class UserControllerTest extends DemoTestCase
         $helper = $this->getService('demo.test.user_helper');
         $helper->delete('test_create');
         $data = [
-            'fullname' => 'Hello World',
+            'fullname' => 'Test Create User',
             'username' => 'test_create',
-            'email' => 'foo@bar.com',
+            'email' => 'test@create.com',
             'plainPassword' => [
                 'first' => 'foo',
                 'second' => 'foo'
@@ -41,7 +41,7 @@ class UserControllerTest extends DemoTestCase
         ];
         $data = json_encode($data);
         $client = $this->createAuthenticatedClient();
-        $client->request('POST','/api/users',[],[],[
+        $client->request('POST','/api/register',[],[],[
             'Accept'=>'application/json',
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ],$data);
@@ -56,9 +56,9 @@ class UserControllerTest extends DemoTestCase
     public function testCreateError()
     {
         $data = [
-            'fullname' => 'Hello World',
-            'username' => 'test_create',
-            'email' => 'foo@bar.com',
+            'fullname' => 'Test Create Error',
+            'username' => 'test_create_error',
+            'email' => 'test_create@error.com',
             'plainPassword' => [
                 'first' => 'foo',
                 'second' => 'bar'
@@ -66,14 +66,14 @@ class UserControllerTest extends DemoTestCase
         ];
         $data = json_encode($data);
         $client = $this->createAuthenticatedClient();
-        $client->request('POST','/api/users',[],[],[
+        $client->request('POST','/api/register',[],[],[
             'Accept'=>'application/json',
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ],$data);
         $response = $client->getResponse();
 
         $this->assertEquals(Response::HTTP_BAD_REQUEST,$response->getStatusCode());
-        ResponseAsserter::assertResponsePropertiesExist($response,['data.username']);
+        ResponseAsserter::assertResponsePropertiesExist($response,['errors.plainPassword']);
     }
 
     public function testGet()
@@ -91,5 +91,25 @@ class UserControllerTest extends DemoTestCase
 
         $this->assertEquals(200,$response->getStatusCode());
         ResponseAsserter::assertResponsePropertyEquals($response,'username','toni');
+    }
+
+    public function testUpdateUser()
+    {
+        $this->markTestIncomplete();
+        $helper = $this->getService('demo.test.user_helper');
+        $helper->create('test_update','foo');
+        $data = [
+            'fullname' => 'Test Create User',
+            'email' => 'test@create.com'
+        ];
+        $client = $this->createAuthenticatedClient();
+        $client->request('PATCH', '/api/users/test_update',[],[],[
+            'Accept'=>'application/json',
+            'HTTP_X-Requested-With' => 'XMLHttpRequest',
+        ],$data);
+        $response = $client->getResponse();
+
+        $this->assertEquals(202,$response->getStatusCode());
+        ResponseAsserter::assertResponsePropertyEquals($response,'username','test_update');
     }
 }

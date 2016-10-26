@@ -26,6 +26,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class DemoTestCase extends WebTestCase
 {
+    static protected $authenticatedClients;
+
     /**
      * @var UserTestHelper
      */
@@ -64,15 +66,20 @@ class DemoTestCase extends WebTestCase
 
     protected function createAuthenticatedClient($role="ROLE_SUPER_ADMIN",$username='testuser',$password='testuser',$email='test@user.com',$fullname='Test User')
     {
-        $user = $this->helperUserCreate($username,$password,$email,$fullname,$role);
-        $client = static::createClient();
-        $client->request('POST',$this->generateUrl('api_login_check'),[
-            'username' => $user->getUsername(),
-            'password' => $password,
-        ]);
-        $data = json_decode($client->getResponse()->getBody(),true);
-        $client = static::createClient();
-        $client->setServerParameter('HTTP_Authorization',sprintf('Bearer %s',$data['token']));
+        $id = md5($role.$username);
+        if(!($client=static::$authenticatedClients[$id])){
+            $user = $this->helperUserCreate($username,$password,$email,$fullname,$role);
+            $client = static::createClient();
+            $client->request('POST',$this->generateUrl('api_auth_tokens'),[
+                'username' => $user->getUsername(),
+                'password' => $password,
+            ]);
+            $data = json_decode($client->getResponse()->getBody(),true);
+            $client = static::createClient();
+            $client->setServerParameter('HTTP_Authorization',sprintf('Bearer %s',$data['token']));
+            static::$authenticatedClients[$id] = $client;
+        }
+
         return $client;
     }
 
