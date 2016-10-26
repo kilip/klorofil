@@ -29,6 +29,15 @@ class RegistrationType extends AbstractType
                 'invalid_message' => 'fos_user.password.mismatch',
             ))
         ;
+
+        if(in_array('Profile',$options['validation_groups'])){
+            $builder
+                ->remove('plainPassword')
+                ->remove('username')
+            ;
+        }
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -92,4 +92,24 @@ class UserControllerTest extends DemoTestCase
         $this->assertEquals(200,$response->getStatusCode());
         ResponseAsserter::assertResponsePropertyEquals($response,'username','toni');
     }
+
+    public function testUpdateUser()
+    {
+        $this->markTestIncomplete();
+        $helper = $this->getService('demo.test.user_helper');
+        $helper->create('test_update','foo');
+        $data = [
+            'fullname' => 'Test Create User',
+            'email' => 'test@create.com'
+        ];
+        $client = $this->createAuthenticatedClient();
+        $client->request('PATCH', '/api/users/test_update',[],[],[
+            'Accept'=>'application/json',
+            'HTTP_X-Requested-With' => 'XMLHttpRequest',
+        ],$data);
+        $response = $client->getResponse();
+
+        $this->assertEquals(202,$response->getStatusCode());
+        ResponseAsserter::assertResponsePropertyEquals($response,'username','test_update');
+    }
 }

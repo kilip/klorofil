@@ -6,6 +6,7 @@ use Demo\UserBundle\Entity\User;
 use Demo\UserBundle\Form\RegistrationType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\UserBundle\Form\Type\ProfileFormType;
 use Hateoas\Configuration\Route;
 use Hateoas\Representation\Factory\PagerfantaFactory;
 use Symfony\Component\Form\FormInterface;
@@ -91,10 +92,29 @@ class UserController extends FOSRestController
      *         400 = "Returned when validation failed"
      *     }
      * )
-     * @Rest\Patch("/users",name="api_user_update")
+     * @Rest\Patch("/users/{username}",name="api_user_update")
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function updateAction()
+    public function updateAction($username,Request $request)
     {
+        $manager = $this->get('fos_user.user_manager');
+        $data = json_decode($request->getContent(),true);
+        $user = $manager->findUserByUsername($username);
+        $form = $this->createForm(RegistrationType::class,$user,[
+            'validation_groups' => 'Profile'
+        ]);
+        $form->submit($data);
+        if($form->isValid()){
+            $manager->updateUser($user);
+            return $this->view($user,Response::HTTP_ACCEPTED);
+        }
+        $data = [
+            'errors' => $this->getErrorsFromForm($form),
+            'type' => 'validation_error',
+            'title' => 'There was a validation error',
+            'data' => $form->getData()
+        ];
+        return $this->view($data,Response::HTTP_BAD_REQUEST);
 
     }
 
