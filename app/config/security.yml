@@ -26,7 +26,7 @@ security:
                 username_parameter: username
                 password_parameter: password
         api:
-            pattern:   ^/api/(!token|!doc)
+            pattern:   ^/api/(?!token)
             stateless: true
             guard:
                 authenticators:
