@@ -1,25 +1,23 @@
 {
-  "name": "toni-demo",
+  "name": "demo-frontend",
   "version": "1.0.0",
-  "description": "Anthonius Munthi Demo",
+  "description": "Anthonius Munthi Demo Frontend",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nf start -p 3000"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kilip/demo.git"
   },
-  "keywords": [
-    "demo"
-  ],
-  "author": "Anthonius Munthi <me@itstoni.com>",
+  "author": "Anthonius Munthi <me@itstoni.com> (http://itstoni.com)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/kilip/demo/issues"
   },
   "homepage": "https://github.com/kilip/demo#readme",
-  "dependencies": {
-    "admin-lte": "^2.3.7"
+  "dependencies": {},
+  "devDependencies": {
+    "foreman": "^2.0.0"
   }
 }

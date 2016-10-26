@@ -1,0 +1,3 @@
+concurency: web=1
+env:        .env
+procfile:   Procfile

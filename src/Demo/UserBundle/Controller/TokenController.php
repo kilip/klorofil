@@ -31,23 +31,30 @@ class TokenController extends Controller
         $password = $request->get('password');
 
         $user = $this->get('fos_user.user_manager')
-            ->findUserByUsername($username)
+            ->findUserByUsernameOrEmail($username)
         ;
 
+        $invalidUser = [
+            'errors' => [
+                '_error' => 'Either your username or password is invalid.',
+            ]
+        ];
         if(!$user){
-            throw new NotFoundHttpException('User '.$username. ' not found');
+            return new JsonResponse($invalidUser,Response::HTTP_UNAUTHORIZED);
         }
 
         $isValid = $this->get('security.password_encoder')
             ->isPasswordValid($user,$password)
         ;
         if(!$isValid){
-            throw new BadCredentialsException('Invalid password',Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse($invalidUser,Response::HTTP_UNAUTHORIZED);
         }
         $token = $this->get('lexik_jwt_authentication.encoder')
             ->encode([
                 'username' => $user->getUsername(),
                 'exp' => time() + 3600,
+                'roles' => $user->getRoles(),
+                'email' => $user->getEmail()
             ])
         ;
 
