@@ -15,6 +15,7 @@ export function logout() {
         localStorage.removeItem('DemoAuthToken');
         setAuthorizationToken(false);
         dispatch(setCurrentUser({}));
+        console.log('remove current user');
     }
 }
 

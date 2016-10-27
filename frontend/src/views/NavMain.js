@@ -5,9 +5,14 @@ import React, {
 
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import {Navbar,Nav} from 'react-bootstrap';
 
 class NavMain extends Component {
+    constructor(props){
+        super(props);
+
+        this.logout = this.logout.bind(this);
+    }
+
     logout(e) {
         e.preventDefault();
         this.context.router.push('/login');
@@ -17,10 +22,10 @@ class NavMain extends Component {
     render() {
         const { isAuthenticated } = this.props.auth;
 
+
         const userLinks = (
             <ul className="nav navbar-nav navbar-right">
-                <li><a href="#" onClick={this.logout.bind(this)}>Logout</a></li>
-                <li><Link to="/users">Users</Link></li>
+                <li><a href="#" onClick={this.logout}>Logout</a></li>
             </ul>
         );
 
@@ -32,24 +37,22 @@ class NavMain extends Component {
         );
 
         return (
-            <Navbar
-                staticTop
-                componentClass="header"
-                className="navbar navbar-default navbar-static-top"
-                role="banner"
-            >
-                <Navbar.Header>
-                    <Navbar.Brand>
-                        <Link to="/">ToniDemo</Link>
-                        <Navbar.Toggle/>
-                    </Navbar.Brand>
-                </Navbar.Header>
-                <Navbar.Collapse className="bs-navbar-collapse">
-                    <Nav role="navigation" id="top">
-                        { isAuthenticated ? userLinks:guestLinks}
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
+            <header className="main-header">
+                <Link to="/" className="logo">
+                    <span className="logo-mini"><b>TM</b></span>
+                    <span className="logo-lg"><b>Toni</b>Demo</span>
+                </Link>
+                <nav
+                    className="navbar navbar-static-top"
+                >
+                    <a href="#" className="sidebar-toggle">
+                        <span className="sr-only">Toggle Navigation</span>
+                    </a>
+                    <div className="navbar-custom-menu">
+                        {isAuthenticated ? userLinks : guestLinks }
+                    </div>
+                </nav>
+            </header>
         );
     }
 }
