@@ -12,9 +12,15 @@ import routes from './routes';
 
 import axios from 'axios';
 import store from './store';
+import _ from 'lodash';
 
 const history = syncHistoryWithStore(browserHistory,store);
-axios.defaults.baseURL = 'http://localhost:8000/api';
+const baseUrl = 'http://localhost:8000/api';
+if(process.env.hasOwnProperty('REACT_DEMO_API_URI')){
+    const baseUrl = process.env.REACT_DEMO_API_URI;
+}
+
+axios.defaults.baseURL = baseUrl;
 
 import {setAuthToken,setCurrentUser} from './components/auth/actions';
 import jwtDecode from 'jwt-decode';
