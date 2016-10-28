@@ -22,9 +22,9 @@ class Sidebar extends Component
                     <ul className="sidebar-menu">
                         <li className="header">Main Navigation</li>
                         <li>
-                            <Link to="#">
+                            <Link to="/" activeClassName="active">
                                 <i className="fa fa-calendar"/>
-                                <span>Test Menu</span>
+                                <span>Dashboard</span>
                             </Link>
                         </li>
                     </ul>
