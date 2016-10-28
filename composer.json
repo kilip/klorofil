@@ -73,7 +73,9 @@
             "file": "app/config/parameters.yml",
             "env-map": {
                 "secret": "SYMFONY_SECRET",
-                "jwt_key_pass_phrase": "JWT_KEY_PASS_PHRASE"
+                "jwt_key_pass_phrase": "JWT_KEY_PASS_PHRASE",
+                "database_url": "DATABASE_URL",
+                "monolog_action_level": "LOG_LEVEL"
             }
         }
     }
