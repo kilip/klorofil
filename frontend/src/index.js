@@ -1,37 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, browserHistory } from 'react-router';
+import { syncHistoryWithStore} from 'react-router-redux';
 
-import { createStore,applyMiddleware,compose } from 'redux';
+import 'rxjs';
+
 import {Provider} from 'react-redux';
-import thunk from 'redux-thunk';
-
-import jwtDecode from 'jwt-decode';
-import { setAuthorizationToken,setCurrentUser } from  './components/auth/actions';
-
+//import jwtDecode from 'jwt-decode';
+//import { setAuthorizationToken,setCurrentUser } from  './components/auth/old/actions.old';
 import routes from './routes';
-import reducers from './reducers';
 
 import axios from 'axios';
+import store from './store';
 
+const history = syncHistoryWithStore(browserHistory,store);
 axios.defaults.baseURL = 'http://localhost:8000/api';
 
-const store = createStore(
-    reducers,
-    compose(
-        applyMiddleware(thunk),
-        window.devToolsExtension ? window.devToolsExtension() : f => f
-    )
-);
-
+import {setAuthToken,setCurrentUser} from './components/auth/actions';
+import jwtDecode from 'jwt-decode';
 if (localStorage.DemoAuthToken) {
-    setAuthorizationToken(localStorage.DemoAuthToken);
+    setAuthToken(localStorage.DemoAuthToken);
     store.dispatch(setCurrentUser(jwtDecode(localStorage.DemoAuthToken)));
 }
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={browserHistory} routes={routes} />
+        <Router history={history} routes={routes} />
     </Provider>,
     document.getElementById('root')
 );

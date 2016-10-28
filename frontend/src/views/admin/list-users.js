@@ -5,34 +5,51 @@ import React, {
 import Box from '../theme/box';
 import autoBind from 'react-autobind';
 import {Link} from 'react-router';
+import {searchUsers} from '../../components/users/actions';
 import { connect } from 'react-redux';
-import { listUsers } from '../../components/users/data';
+import _ from 'lodash';
 
 class ListUsers extends Component {
 
     constructor(props){
         super(props);
-        autoBind(this);
         this.state = {
-            isLoading: false
+            isLoading: false,
+            page: 1
         };
+        autoBind(this);
     }
 
     reloadUser(){
-        console.log('reload')
         this.setState({isLoading: true});
-        this.props.listUsers().then(
-            () => {},
-            (err) => {}
-        );
+        this.props.searchUsers(this.state.page);
         this.setState({isLoading: false});
     }
 
-    render() {
-        const {isLoading} = this.state;
-        const content = (
-            <h4>Hello World</h4>
+    componentWillMount(){
+        this.setState({isLoading: true});
+        if(_.isEmpty(this.props.userList)){
+            this.reloadUser();
+        }
+    }
+
+    componentDidMount(){
+        this.setState({isLoading: false});
+    }
+
+    renderUser(index){
+        const user = this.props.userList.users[index];
+        return (
+            <tr key={index}>
+                <td>{user.fullname}</td>
+                <td>{user.username}</td>
+                <td>{user.email}</td>
+            </tr>
         );
+    }
+    render() {
+        const {isLoading } = this.state;
+        const { userList } = this.props;
 
         var boxTools = [
             {
@@ -56,19 +73,37 @@ class ListUsers extends Component {
                 theme="box-primary box-success"
                 className='col-md-12 col-sr'
                 collapsed={false}
-                content={content}
                 boxTools={boxTools}
                 loading={isLoading}
                 footer={footers}
-            />
+            >
+                <table className="table">
+                    <thead>
+                    <tr>
+                        <th>Fullname</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {userList.users && Object.keys(userList.users).map(this.renderUser)}
+                    </tbody>
+                </table>
+            </Box>
         </div>
         );
     }
 }
 
 ListUsers.propTypes = {
-    listUsers: PropTypes.func.isRequired
+    searchUsers: PropTypes.func.isRequired,
+    userList: PropTypes.object.isRequired
 };
+
 ListUsers.defaultProps = {};
 
-export default connect(null,{listUsers})(ListUsers);
+export default connect(
+    state => ({
+        userList: state.userList
+    }),
+{ searchUsers })(ListUsers);

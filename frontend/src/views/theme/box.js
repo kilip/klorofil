@@ -79,7 +79,8 @@ Box.defaultProps = {
     theme: 'box-default',
     loading: false,
     border: false,
-    width: '12'
+    width: '12',
+    boxTools: []
 };
 
 export default Box;

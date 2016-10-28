@@ -4,23 +4,21 @@ import React, {
 } from 'react';
 
 import Box from '../theme/box';
+import { Link } from 'react-router'
 
 class CreateUser extends Component {
 
     render() {
         var footers = (
             <div>
-                Test
-            </div>
-        );
-        var boxTools = (
-            <div>
-                Test
-            </div>
-        );
-        var content = (
-            <div>
-                We begin a content from here
+                <button type="button" className="btn btn-sm btn-success">
+                    <i className="fa fa-floppy-o"/>
+                    Save
+                </button>&nbsp;
+                <Link to='/users' className="btn btn-sm btn-info" role="button">
+                    <i className="fa fa-step-backward"/>
+                    Back
+                </Link>
             </div>
         );
         return (
@@ -30,11 +28,11 @@ class CreateUser extends Component {
                     theme="box-primary box-success"
                     className='col-md-12 col-sr'
                     collapsed={false}
-                    content={content}
-                    boxTools={boxTools}
                     loading={false}
                     footer={footers}
-                />
+                >
+
+                </Box>
             </div>
         );
     }

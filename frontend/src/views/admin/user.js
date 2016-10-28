@@ -1,9 +1,10 @@
 import React, {
     Component,
-//    PropTypes,
+    //PropTypes,
 } from 'react';
 
 import MainContainer from '../MainContainer';
+import { connect } from 'react-redux';
 
 class User extends Component {
     render() {
@@ -15,7 +16,9 @@ class User extends Component {
     }
 }
 
-User.propTypes = {};
+User.propTypes = {
+
+};
 User.defaultProps = {};
 
-export default User;
+export default connect(null,{ })(User);

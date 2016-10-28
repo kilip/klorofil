@@ -4,8 +4,6 @@ import { addFlashMessage } from '../../common/FlashMessageAction';
 import _ from 'lodash';
 
 export default function(ComposedComponent,requiredRoles){
-
-
     class Authenticate extends React.Component {
         isGranted(){
             return this.props.auth.user.isGranted(requiredRoles);
@@ -29,7 +27,7 @@ export default function(ComposedComponent,requiredRoles){
 
         componentWillUpdate(nextProps) {
             if (!nextProps.isAuthenticated) {
-                this.context.router.push('/');
+                this.context.router.push('/login');
             }
         }
 
