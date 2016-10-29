@@ -57,11 +57,11 @@
         ],
         "post-install-cmd": [
             "@symfony-scripts",
+            "php ./bin/console doctrine:schema:update --force -n",
             "php ./bin/console doctrine:fixtures:load --purge-with-truncate -n"
         ],
         "post-update-cmd": [
-            "@symfony-scripts",
-            "php ./bin/console doctrine:fixtures:load --purge-with-truncate -n"
+            "@symfony-scripts"
         ]
     },
     "extra": {
