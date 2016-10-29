@@ -20,8 +20,6 @@ install:
     # coveralls preparation
     - composer require satooshi/php-coveralls
     - mkdir -p build/logs
-    - bin/console doctrine:database:create --if-not-exists
-    - bin/console doctrine:schema:create
 
 script:
     - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
