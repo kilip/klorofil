@@ -5,6 +5,7 @@ namespace Demo\FrontendBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends Controller
 {
@@ -15,8 +16,7 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('FrontendBundle:main:index.html.twig', [
-
-        ]);
+        $url = $this->getParameter('demo.frontend_url');
+        return $this->redirect($url,Response::HTTP_PERMANENTLY_REDIRECT);
     }
 }
