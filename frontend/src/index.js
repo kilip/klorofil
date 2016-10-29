@@ -14,14 +14,15 @@ import axios from 'axios';
 import store from './store';
 import _ from 'lodash';
 
-const history = syncHistoryWithStore(browserHistory,store);
-const baseUrl = 'http://localhost:8000/api';
-if(process.env.hasOwnProperty('REACT_DEMO_API_URI')){
-    const baseUrl = process.env.REACT_DEMO_API_URI;
-}
 
+var baseUrl = 'http://localhost:8000/api';
+if(process.env.hasOwnProperty('REACT_APP_API_URI')){
+    baseUrl = process.env.REACT_APP_API_URI;
+}
+console.log(baseUrl);
 axios.defaults.baseURL = baseUrl;
 
+const history = syncHistoryWithStore(browserHistory,store);
 import {setAuthToken,setCurrentUser} from './components/auth/actions';
 import jwtDecode from 'jwt-decode';
 if (localStorage.DemoAuthToken) {

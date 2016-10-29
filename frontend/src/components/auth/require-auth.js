@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { addFlashMessage } from '../../common/FlashMessageAction';
 import _ from 'lodash';
 
-export default function(ComposedComponent,requiredRoles){
+export default function(ComposedComponent,requiredRoles='ROLE_USER'){
     class Authenticate extends React.Component {
         isGranted(){
             return this.props.auth.user.isGranted(requiredRoles);
@@ -11,10 +11,6 @@ export default function(ComposedComponent,requiredRoles){
 
         componentWillMount() {
             if (!this.props.isAuthenticated) {
-                this.props.addFlashMessage({
-                    type: 'error',
-                    text: 'You need to login to access this page'
-                });
                 this.context.router.push('/login');
             }else if(!this.isGranted()){
                 this.props.addFlashMessage({

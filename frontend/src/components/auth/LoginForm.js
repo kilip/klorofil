@@ -8,6 +8,7 @@ import TextFieldGroup from '../../common/TextFieldGroup';
 import {connect} from 'react-redux';
 import autoBind from 'react-autobind';
 import {login} from '../auth/actions';
+import _ from 'lodash';
 
 class LoginForm extends Component {
     constructor(props) {
@@ -30,7 +31,7 @@ class LoginForm extends Component {
         return (
             <form onSubmit={handleSubmit(this.onSubmit)}>
                 { error && <div className="alert alert-danger">{error}</div> }
-                { authError && <div className="alert alert-danger">{authError._error}</div> }
+                { !_.isEmpty(authError) && <div className="alert alert-danger">{authError._error}</div> }
                 <Field
                     name="username"
                     label="Username"
