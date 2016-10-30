@@ -35,10 +35,17 @@ class User extends BaseUser
      */
     protected $fullname;
 
+    /**
+     * @ORM\Column(type="string",length=255,nullable=true)
+     * @var string
+     */
+    protected $avatar;
+
     public function __construct()
     {
         parent::__construct();
         $this->setEnabled(true);
+        $this->setAvatar('http://lorempixel.com/150/150/people/');
     }
 
     /**
@@ -57,4 +64,19 @@ class User extends BaseUser
         $this->fullname = $fullname;
     }
 
+    /**
+     * @return string
+     */
+    public function getAvatar(): string
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param string $avatar
+     */
+    public function setAvatar(string $avatar)
+    {
+        $this->avatar = $avatar;
+    }
 }

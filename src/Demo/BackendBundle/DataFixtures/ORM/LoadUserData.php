@@ -39,8 +39,11 @@ class LoadUserData implements FixtureInterface,ContainerAwareInterface
 
     public function load(ObjectManager $manager)
     {
+        $manager->getConnection()->beginTransaction();
         $this->generateDefaultUser($manager);
         $this->generateFakeUser($manager);
+        $manager->flush();
+        $manager->getConnection()->commit();
     }
 
     private function generateDefaultUser(ObjectManager $om)
@@ -53,25 +56,40 @@ class LoadUserData implements FixtureInterface,ContainerAwareInterface
         $user->setEmail('me@itstoni.com');
         $user->addRole('ROLE_SUPER_ADMIN');
         $user->addRole('ROLE_ADMIN');
-        $manager->updateUser($user);
+        $manager->updateUser($user,false);
     }
 
     private function generateFakeUser(ObjectManager $om)
     {
         $manager = $this->container->get('fos_user.user_manager');
-        $om->getConnection()->beginTransaction();
         $faker = Faker::create();
-        for($i=1;$i<=100;$i++){
+
+        $baseImageUrl = $this->container->getParameter('demo.backend_url').'/bundles/user/images';
+        $avatars = [
+            'male' => [
+                $baseImageUrl.'/male-1.png',
+                $baseImageUrl.'/male-2.png',
+                $baseImageUrl.'/male-3.png',
+            ],
+            'female' => [
+                $baseImageUrl.'/female-1.png',
+                $baseImageUrl.'/female-2.png',
+                $baseImageUrl.'/female-3.png',
+            ]
+        ];
+        $genders = ['male','female'];
+        for($i=1;$i<=2;$i++){
+            $gender = $genders[array_rand(['male','female'])];
+            $avatar = $avatars[$gender][array_rand($avatars[$gender])];
             $user = $manager->createUser();
             $user->setUsername($this->generateUsername());
-            $user->setFullname($faker->name);
-            $user->setEmail($faker->email);
+            $user->setFullname($faker->name($gender));
+            $user->setEmail($faker->email($gender));
             $user->setPlainPassword('fakeruser');
             $user->addRole('ROLE_USER');
-            $manager->updateUser($user);
+            $user->setAvatar($avatar);
+            $manager->updateUser($user,false);
         }
-        $om->flush();
-        $om->getConnection()->commit();
     }
 
     private function generateUsername()

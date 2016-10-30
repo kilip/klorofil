@@ -22,3 +22,4 @@ parameters:
     jwt_key_pass_phrase:  null
 
     demo.frontend_url:    http://localhost:3000
+    demo.backend_url:     http://localhost:8000

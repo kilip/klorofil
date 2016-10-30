@@ -41,6 +41,7 @@ class ListUsers extends Component {
         const user = this.props.userList.users[index];
         return (
             <tr key={index}>
+                <td><img src={user.avatar}/></td>
                 <td>{user.fullname}</td>
                 <td>{user.username}</td>
                 <td>{user.email}</td>
@@ -80,7 +81,7 @@ class ListUsers extends Component {
                 <table className="table">
                     <thead>
                     <tr>
-                        <th>Fullname</th>
+                        <th colSpan="2">Fullname</th>
                         <th>Username</th>
                         <th>Email</th>
                     </tr>
