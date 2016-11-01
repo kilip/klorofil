@@ -1,76 +1,29 @@
 import React, {
     Component,
-    PropTypes
+    PropTypes,
 } from 'react';
-import _ from 'lodash';
 
-import FlashMessages from '../components/FlashMessageList';
-import { connect } from 'react-redux';
-import { logout } from '../components/auth/actions';
-import { Link } from 'react-router';
-// style loading
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'admin-lte/dist/css/AdminLTE.min.css';
-import 'admin-lte/dist/css/skins/_all-skins.min.css';
-import 'font-awesome/css/font-awesome.min.css';
-import '../assets/style.css';
-
-import {replaceCssClass} from '../components/dom-utils';
-import NavMain from './NavMain';
-import Sidebar from './Sidebar';
-
-class Dashboard extends Component
-{
-
-    /**
-     * Returns layout for guests
-     * @returns {XML}
-     */
-    loginLayout(){
-        replaceCssClass(document.body,['hold-transition','login-page']);
-        return(
-            <div className="login-box">
-                <div className="login-logo">
-                    <Link to="/">
-                        <b>Toni</b>Demo
-                    </Link>
-                </div>
-                {this.props.children}
-            </div>
-        );
-    }
-
-    /**
-     * Return layout for authenticated users
-     * @returns {XML}
-     */
-    authenticatedLayout() {
-        const {logout,auth} = this.props;
-        replaceCssClass(document.body,'sidebar-mini skin-blue');
-        return (
-            <div className="wrapper">
-                <NavMain logout={logout} auth={auth} />
-                <FlashMessages/>
-                <Sidebar/>
-                {this.props.children}
-            </div>
-        );
-    }
+import 'bootstrap/dist/css/bootstrap-theme.min.css';
+import { Link } from 'react-router';
+class Dashboard extends Component {
     render() {
-        const { isAuthenticated } = this.props.auth;
-        return isAuthenticated ? this.authenticatedLayout():this.loginLayout();
+        return (
+            <div>
+                <h1>Dashboard</h1>
+                <Link to="/">Dashboard</Link>
+                <Link to="/users">User List</Link>
+                {this.props.children}
+            </div>
+        );
     }
 }
 
 Dashboard.propTypes = {
-    logout: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+
+};
+Dashboard.defaultProps = {
+
 };
 
-function mapStateToProps(state){
-    return {
-        auth: state.auth
-    }
-}
-
-export default connect(mapStateToProps, { logout })(Dashboard);
+export default Dashboard;

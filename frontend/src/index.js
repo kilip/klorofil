@@ -1,38 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, browserHistory } from 'react-router';
-import { syncHistoryWithStore} from 'react-router-redux';
-
 import 'rxjs';
+import { Router, browserHistory } from 'react-router';
+import { Provider } from 'react-redux';
+import { syncHistoryWithStore } from 'react-router-redux';
 
-import {Provider} from 'react-redux';
-//import jwtDecode from 'jwt-decode';
-//import { setAuthorizationToken,setCurrentUser } from  './components/auth/old/actions.old';
-import routes from './routes';
-
-import axios from 'axios';
 import store from './store';
-import _ from 'lodash';
-
-
-var baseUrl = 'http://localhost:8000/api';
-if(process.env.hasOwnProperty('REACT_APP_API_URI')){
-    baseUrl = process.env.REACT_APP_API_URI;
-}
-console.log(baseUrl);
-axios.defaults.baseURL = baseUrl;
-
+import routes from './routes';
+import * as authActions from './components/auth/actions';
 const history = syncHistoryWithStore(browserHistory,store);
-import {setAuthToken,setCurrentUser} from './components/auth/actions';
-import jwtDecode from 'jwt-decode';
-if (localStorage.DemoAuthToken) {
-    setAuthToken(localStorage.DemoAuthToken);
-    store.dispatch(setCurrentUser(jwtDecode(localStorage.DemoAuthToken)));
+
+const token = localStorage.getItem(authActions.AUTH_TOKEN_STORAGE_KEY);
+if(token){
+    store.dispatch(authActions.setAuthToken(token));
 }
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={history} routes={routes} />
+        <Router history={history} routes={routes}/>
     </Provider>,
     document.getElementById('root')
 );

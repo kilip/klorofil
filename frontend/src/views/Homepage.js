@@ -1,16 +1,12 @@
-import React, {
-    Component
-} from 'react';
+import React, { Component } from 'react';
 
-import MainContainer from './MainContainer';
-
-
-class Homepage extends Component {
+class Homepage extends Component
+{
     render() {
         return (
-            <MainContainer pageTitle="Homepage" breadcrumb="test">
-                Hello World
-            </MainContainer>
+            <div>
+                <h2>Homepage</h2>
+            </div>
         );
     }
 }

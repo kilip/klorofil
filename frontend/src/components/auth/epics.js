@@ -1,22 +1,26 @@
-import { Observable } from 'rxjs/Observable';
-import * as authActions from './actions';
-import {receivedToken} from './actions';
-import axios from 'axios';
+import { ajax } from 'rxjs/observable/dom/ajax';
+import * as actions from './actions';
 
-export function login(action$){
-    return action$.ofType(authActions.LOGIN_START)
-        .map(action => action.payload.data)
-        .switchMap(
-            data =>
-                Observable
-                    .fromPromise(axios.post('/token',data))
-                    .map(receivedToken.bind(data))
-                    .catch(error => Observable.of({
-                        type: authActions.LOGIN_FAILED,
-                        payload: error,
-                        error: true
-                    }))
-
+export function authEpic(action$){
+    return action$.ofType(actions.LOGIN_START)
+        .debounceTime(500)
+        .switchMap(action =>
+            ajax.post('http://localhost:8000/api/token',action.payload.credentials)
+                .map(
+                    payload => ({
+                        type: actions.LOGIN_RESULT,
+                        token: payload.response.token,
+                        redirect: action.payload.redirect,
+                        payload
+                    })
+                )
+                .takeUntil(action$.ofType(actions.LOGIN_CANCEL))
+                .catch(payload =>[{
+                    type: actions.LOGIN_ERROR,
+                    error: true,
+                    payload,
+                    response: payload.xhr.response
+                }])
         )
     ;
 }

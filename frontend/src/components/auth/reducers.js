@@ -1,27 +1,31 @@
-import isEmpty from 'lodash/isEmpty';
-import AuthenticatedUser from './AuthenticatedUser';
-import * as authActions from './actions'
+import * as authAction from './actions';
+import AuthUser from './user';
+const initialState = new AuthUser();
 
-const initialState = {
-    isAuthenticated: false,
-    errors: {},
-    user: {}
-};
-export default (state = initialState, action = {}) => {
-    switch(action.type) {
-        case authActions.SET_CURRENT_USER:
-            var authUser = new AuthenticatedUser(action.payload.user);
+export default (state = initialState, action = []) => {
+    switch(action.type){
+        case authAction.LOGIN_START:
+            return Object.assign(new AuthUser(), state,{
+                isAuthenticating: true,
+                isAuthenticated: false
+            });
+        case authAction.LOGIN_RESULT:
+            const user = new AuthUser();
+            user.setToken(action.token);
+            return Object.assign(user, state,{
+                isAuthenticating: false,
+                isAuthenticated: true,
+            });
+        case authAction.LOGIN_ERROR:
             return {
-                isAuthenticated: !isEmpty(action.payload.user),
-                user: authUser
+                isAuthenticated: false,
+                user: {},
+                error: action.response.errors._error
             };
-        case authActions.LOGIN_END:
-            return action.payload.users;
-        case authActions.LOGIN_START:
-            return initialState;
-        case authActions.LOGIN_FAILED:
+        case authAction.LOGOUT:
             return {
-                errors: action.payload.response.data.errors
+                isAuthenticated: false,
+                user: new AuthUser(),
             };
         default:
             return state;

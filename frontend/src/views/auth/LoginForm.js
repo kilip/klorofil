@@ -1,37 +1,38 @@
 import React, {
     Component,
-    PropTypes,
+    PropTypes
 } from 'react';
-
-import { Field,reduxForm} from 'redux-form';
-import TextFieldGroup from '../../common/TextFieldGroup';
-import {connect} from 'react-redux';
-import autoBind from 'react-autobind';
-import {login} from '../auth/actions';
-import _ from 'lodash';
+import { connect } from 'react-redux';
+import { login } from '../../components/auth/actions';
+import { Field, reduxForm } from 'redux-form';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 class LoginForm extends Component {
-    constructor(props) {
+    constructor(props){
         super(props);
-        autoBind(this);
+        this.state = {
+            submit: false,
+        }
     }
-
     onSubmit(values){
+        this.setState({submit: true});
         this.props.login(values);
+        this.setState({submit:false});
     }
 
-    componentWillReceiveProps(nextProps){
-        if(nextProps.auth.isAuthenticated){
+    componentWillUpdate(nextProps){
+        if(nextProps.me.isAuthenticated && ! nextProps.me.isTokenExpired()){
             this.context.router.push('/');
         }
     }
+
     render() {
-        const {handleSubmit,pristine,submitting,error} = this.props;
-        const authError = this.props.auth.errors;
+        const {handleSubmit} = this.props;
+        const { submit } = this.state;
+        const { error } = this.props.me;
         return (
-            <form onSubmit={handleSubmit(this.onSubmit)}>
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 { error && <div className="alert alert-danger">{error}</div> }
-                { !_.isEmpty(authError) && <div className="alert alert-danger">{authError._error}</div> }
                 <Field
                     name="username"
                     label="Username"
@@ -43,25 +44,27 @@ class LoginForm extends Component {
                     type="password"
                     component={TextFieldGroup}
                 />
-                <button type="submit" disabled={pristine||submitting}>Login</button>
+                <button type="submit" disabled={submit}>Login</button>
             </form>
         );
     }
 }
 
 LoginForm.propTypes = {
-    addFlashMessage: PropTypes.func.isRequired,
     login: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    me: PropTypes.object.isRequired
 };
+
 LoginForm.contextTypes = {
     router: PropTypes.object.isRequired
 };
+
+LoginForm.defaultProps = {};
 
 LoginForm = reduxForm({
     form: 'login'
 })(LoginForm);
 
 export default connect(state=>({
-    auth: state.auth,
+    me: state.me
 }),{login})(LoginForm);
