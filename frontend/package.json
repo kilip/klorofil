@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://klorofil.herokuapp.com",
+  "homepage": "https://klorofil.herokuapp.com/dist",
   "devDependencies": {
     "autoprefixer": "6.5.1",
     "babel-core": "6.17.0",

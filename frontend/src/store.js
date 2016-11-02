@@ -1,7 +1,7 @@
 import { createStore,compose, applyMiddleware } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 import { routerMiddleware } from 'react-router-redux';
-import { browserHistory } from 'react-router';
+import { hashHistory } from 'react-router';
 
 import rootEpic from './epics'
 import reducers from './reducers';
@@ -14,7 +14,7 @@ export default createStore(
     composeEnhancers(
         applyMiddleware(
             epicMiddleWare,
-            routerMiddleware(browserHistory)
+            routerMiddleware(hashHistory)
         )
     )
 );

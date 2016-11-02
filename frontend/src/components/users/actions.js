@@ -6,7 +6,9 @@ export const SEARCH_ERROR       = 'users.search.error';
 import Pager from '../util/pager';
 
 const initialState = {
-    pager: new Pager()
+    pager: new Pager({
+        baseUrl: '/api/users'
+    })
 };
 export function userCollection(state=initialState,action){
     const pager = state.pager;
