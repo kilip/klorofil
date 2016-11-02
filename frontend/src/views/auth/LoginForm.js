@@ -27,7 +27,7 @@ class LoginForm extends Component {
     }
 
     render() {
-        const {handleSubmit} = this.props;
+        const {handleSubmit,submitting,pristine} = this.props;
         const { submit } = this.state;
         const { error } = this.props.me;
         return (
@@ -44,7 +44,7 @@ class LoginForm extends Component {
                     type="password"
                     component={TextFieldGroup}
                 />
-                <button type="submit" disabled={submit}>Login</button>
+                <button type="submit" disabled={pristine || submitting || submit}>Login</button>
             </form>
         );
     }

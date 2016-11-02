@@ -10,12 +10,19 @@ export default class AuthenticatedUser
     }
 
     isTokenExpired(){
-        const exp = this.exp;
-        const now = parseInt(Date.now()/1000,0);
+        if(!this.isAuthenticated){
+            return true;
+        }
+        const iat = new Date(this.iat*1000);
+        const exp = new Date(iat.getTime()+(1000*this.ttl));
+        const now  = new Date();
         return now >= exp;
     }
 
     isGranted(requiredRoles){
+        if(!this.isAuthenticated){
+            return false;
+        }
         if(!_.isArray(requiredRoles)){
             requiredRoles = [requiredRoles];
         }
@@ -31,18 +38,22 @@ export default class AuthenticatedUser
     }
 
     setToken(token){
-        const {username,roles,email,iat,exp} = jwtDecode(token);
+        const {username,roles,email,iat,exp,ttl} = jwtDecode(token);
         this.username = username;
         this.roles = roles;
         this.email = email;
         this.iat = iat;
         this.exp = exp;
+        this.ttl = ttl;
         this.token = token;
-
         this.storeToken(token);
     }
 
     storeToken(token){
-        localStorage.setItem(authActions.AUTH_TOKEN_STORAGE_KEY,token);
+        if(null===token){
+            localStorage.removeItem(authActions.AUTH_TOKEN_STORAGE_KEY);
+        }else{
+            localStorage.setItem(authActions.AUTH_TOKEN_STORAGE_KEY,token);
+        }
     }
 }

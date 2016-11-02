@@ -1,18 +1,18 @@
 import React, {
     Component,
-    PropTypes,
+//    PropTypes,
 } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/css/bootstrap-theme.min.css';
-import { Link } from 'react-router';
+import 'font-awesome/css/font-awesome.min.css';
+import 'admin-lte/dist/css/AdminLTE.min.css';
+import 'admin-lte/dist/css/skins/_all-skins.min.css';
+import './assets/style.css';
+
 class Dashboard extends Component {
     render() {
         return (
             <div>
-                <h1>Dashboard</h1>
-                <Link to="/">Dashboard</Link>
-                <Link to="/users">User List</Link>
                 {this.props.children}
             </div>
         );

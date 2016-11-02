@@ -16,7 +16,6 @@ export function login(data,redirect){
 }
 
 export function logout(){
-    console.log('logout');
     return {
         type: LOGOUT
     }

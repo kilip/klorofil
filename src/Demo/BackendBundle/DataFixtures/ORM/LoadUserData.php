@@ -42,7 +42,6 @@ class LoadUserData implements FixtureInterface,ContainerAwareInterface
         $manager->getConnection()->beginTransaction();
         $this->generateDefaultUser($manager);
         $this->generateFakeUser($manager);
-        $manager->flush();
         $manager->getConnection()->commit();
     }
 
@@ -56,7 +55,7 @@ class LoadUserData implements FixtureInterface,ContainerAwareInterface
         $user->setEmail('me@itstoni.com');
         $user->addRole('ROLE_SUPER_ADMIN');
         $user->addRole('ROLE_ADMIN');
-        $manager->updateUser($user,false);
+        $manager->updateUser($user);
     }
 
     private function generateFakeUser(ObjectManager $om)
@@ -78,7 +77,7 @@ class LoadUserData implements FixtureInterface,ContainerAwareInterface
             ]
         ];
         $genders = ['male','female'];
-        for($i=1;$i<=2;$i++){
+        for($i=1;$i<=500;$i++){
             $gender = $genders[array_rand(['male','female'])];
             $avatar = $avatars[$gender][array_rand($avatars[$gender])];
             $user = $manager->createUser();
@@ -89,6 +88,9 @@ class LoadUserData implements FixtureInterface,ContainerAwareInterface
             $user->addRole('ROLE_USER');
             $user->setAvatar($avatar);
             $manager->updateUser($user,false);
+            if(($i%25)===0){
+                $om->flush();
+            }
         }
     }
 

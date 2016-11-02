@@ -20,6 +20,7 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
     jwt_key_pass_phrase:  null
+    jwt_token_ttl:        3600
 
     demo.frontend_url:    http://localhost:3000
     demo.backend_url:     http://localhost:8000

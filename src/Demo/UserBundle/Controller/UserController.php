@@ -43,6 +43,7 @@ class UserController extends FOSRestController
         $page = $request->get('page',1);
         $pager = $this->get('demo.user.manager')->getListPager($request->get('sorting',['fullname'=>'asc']));
         $factory = new PagerfantaFactory();
+        $pager->setCurrentPage($page);
         $route = new Route('api_user_list',['limit' => 10,'page' => $page]);
         return $factory->createRepresentation($pager,$route);
     }

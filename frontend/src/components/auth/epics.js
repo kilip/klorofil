@@ -5,7 +5,7 @@ export function authEpic(action$){
     return action$.ofType(actions.LOGIN_START)
         .debounceTime(500)
         .switchMap(action =>
-            ajax.post('http://localhost:8000/api/token',action.payload.credentials)
+            ajax.post('http://localhost:8000/api/token',action.payload.credentials,{'Cache-Control': 'no-cache'})
                 .map(
                     payload => ({
                         type: actions.LOGIN_RESULT,

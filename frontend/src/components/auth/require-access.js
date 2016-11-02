@@ -12,7 +12,7 @@ export function isGranted(role){
 
 export const isAuthenticated = UserAuthWrapper({
     authSelector: (state) => state.me,
-    predicate: me => me.isAuthenticated,
+    predicate: me => !me.isTokenExpired(),
     redirectAction: routerActions.replace,
     failureRedirectPath: '/login',
     wrapperDisplayName: 'UserIsAuthenticated'

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import MainContainer from './MainContainer';
 
 class Homepage extends Component
 {
     render() {
         return (
-            <div>
-                <h2>Homepage</h2>
-            </div>
+            <MainContainer title="Homepage" subtitle="Welcome to Klorofil">
+
+            </MainContainer>
         );
     }
 }

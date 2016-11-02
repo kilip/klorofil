@@ -52,7 +52,7 @@ class TokenController extends Controller
         $token = $this->get('lexik_jwt_authentication.encoder')
             ->encode([
                 'username' => $user->getUsername(),
-                'exp' => time() + 3600,
+                'ttl' => $this->getParameter('lexik_jwt_authentication.token_ttl'),
                 'roles' => $user->getRoles(),
                 'email' => $user->getEmail()
             ])
