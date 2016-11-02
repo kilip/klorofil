@@ -6,6 +6,8 @@ import React, {
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { logout } from '../components/auth/actions';
+import history from '../history';
+
 class NavMain extends Component {
     pushMenu(){
         var body = document.body;
@@ -23,9 +25,14 @@ class NavMain extends Component {
             }
         }
     }
+
+    logout(e){
+        e.preventDefault();
+        this.props.logout();
+        history.push('/login');
+    }
+
     render() {
-
-
         return (
             <header className="main-header">
                 <Link to="/" className="logo">
@@ -41,7 +48,11 @@ class NavMain extends Component {
                         <span className="sr-only">Toggle navigation</span>
                     </a>
                     <div className="navbar-custom-menu">
-
+                        <ul className="nav navbar-nav">
+                            <li>
+                                <a href="#" onClick={this.logout.bind(this)}>Logout</a>
+                            </li>
+                        </ul>
                     </div>
                 </nav>
             </header>
@@ -51,7 +62,6 @@ class NavMain extends Component {
 
 NavMain.propTypes = {
     logout: PropTypes.func.isRequired,
-
 };
 NavMain.defaultProps = {};
 

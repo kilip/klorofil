@@ -1,5 +1,6 @@
 import { ajax } from 'rxjs/observable/dom/ajax';
 import * as userActions from './actions';
+import { checkAjaxUnauthorized } from '../auth/actions';
 
 function getSearchUserSetting(action,store){
     var data = action.payload;
@@ -27,11 +28,14 @@ export function searchUsers(action$,store){
                     })
                 )
                 .takeUntil(action$.ofType(userActions.SEARCH_CANCEL))
-                .catch(payload => [{
-                    type: userActions.SEARCH_ERROR,
-                    error: true,
-                    payload
-                }])
+                .catch(payload => [
+                    {
+                        type: userActions.SEARCH_ERROR,
+                        error: true,
+                        payload
+                    },
+                    checkAjaxUnauthorized(payload,store)
+                ])
         )
     ;
 }

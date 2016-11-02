@@ -24,7 +24,7 @@ export default (state = initialState, action = []) => {
                 error: action.response.errors._error
             };
         case authAction.LOGOUT:
-            state.setToken(null);
+            state.storeToken(null);
             return new AuthUser();
         default:
             return state;

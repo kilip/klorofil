@@ -14,8 +14,6 @@ const token = localStorage.getItem(authActions.AUTH_TOKEN_STORAGE_KEY);
 if(token){
     store.dispatch(authActions.setAuthToken(token));
 }
-
-console.log(process.env);
 ReactDOM.render(
     <Provider store={store}>
         <Router history={history} routes={routes}/>
