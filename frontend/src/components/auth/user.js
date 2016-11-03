@@ -5,22 +5,23 @@ import _ from 'lodash';
 export default class AuthenticatedUser
 {
     constructor(){
-        this.isAuthenticated = false;
-        this.isAuthenticating = false;
+        this.authenticated = false;
+        this.authenticating = false;
     }
 
     isTokenExpired(){
-        if(!this.isAuthenticated){
+        if(!this.authenticated){
             return true;
         }
         const iat = new Date(this.iat*1000);
         const exp = new Date(iat.getTime()+(1000*this.ttl));
         const now  = new Date();
+
         return now >= exp;
     }
 
     isGranted(requiredRoles){
-        if(!this.isAuthenticated){
+        if(!this.authenticated){
             return false;
         }
         if(!_.isArray(requiredRoles)){

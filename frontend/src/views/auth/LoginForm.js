@@ -3,7 +3,7 @@ import React, {
     PropTypes
 } from 'react';
 import { connect } from 'react-redux';
-import { login } from '../../components/auth/actions';
+import { login,tokenExpired } from '../../components/auth/actions';
 import { Field, reduxForm } from 'redux-form';
 import TextFieldGroup from '../common/TextFieldGroup';
 
@@ -21,7 +21,7 @@ class LoginForm extends Component {
     }
 
     componentWillUpdate(nextProps){
-        if(nextProps.me.isAuthenticated && ! nextProps.me.isTokenExpired()){
+        if(nextProps.me.authenticated && ! nextProps.me.isTokenExpired()){
             this.context.router.push('/');
         }
     }
@@ -52,7 +52,8 @@ class LoginForm extends Component {
 
 LoginForm.propTypes = {
     login: PropTypes.func.isRequired,
-    me: PropTypes.object.isRequired
+    me: PropTypes.object.isRequired,
+    tokenExpired: PropTypes.func.isRequired
 };
 
 LoginForm.contextTypes = {
@@ -67,4 +68,4 @@ LoginForm = reduxForm({
 
 export default connect(state=>({
     me: state.me
-}),{login})(LoginForm);
+}),{login,tokenExpired})(LoginForm);

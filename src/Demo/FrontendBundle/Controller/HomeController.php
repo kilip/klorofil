@@ -25,6 +25,7 @@ class HomeController extends Controller
             ->name('main*.js')
         ;
 
+        $mainCss = $mainScript = '';
         foreach($finder->files() as $file){
             if('css' == $file->getExtension()){
                 $mainCss = 'dist/'.$file->getRelativePathname();
