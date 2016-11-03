@@ -9,7 +9,8 @@ import { logout } from '../components/auth/actions';
 import history from '../history';
 
 class NavMain extends Component {
-    pushMenu(){
+    pushMenu(e){
+        e.preventDefault();
         var body = document.body;
         if(body.clientWidth > 768){
             if(body.className.indexOf('sidebar-collapse') === -1){
@@ -44,7 +45,7 @@ class NavMain extends Component {
                     role="navigation"
                 >
                     {/* Sidebar toggle button*/}
-                    <a href="#" className="sidebar-toggle" data-toggle="offcanvas" role="button" onClick={this.pushMenu.bind(this)}>
+                    <a className="sidebar-toggle" data-toggle="offcanvas" role="button" onClick={this.pushMenu.bind(this)}>
                         <span className="sr-only">Toggle navigation</span>
                     </a>
                     <div className="navbar-custom-menu">

@@ -9,6 +9,7 @@ import { replaceCssClass } from './utils/dom';
 import { connect } from 'react-redux';
 import { removeFlashMessage } from '../components/util/flash-message';
 import FlashMessageList from './common/flash-message-list';
+import _ from 'lodash';
 
 export const LAYOUT_LOGIN   = 'layout.login';
 export const LAYOUT_DEFAULT = 'layout.default';
@@ -29,7 +30,11 @@ class MainContainer extends Component {
 
     dashboardLayout(){
         const { title, subtitle, removeFlashMessage } = this.props;
-        replaceCssClass(document.body,'sidebar-mini skin-blue');
+
+        const cssClass = document.body.classList;
+        if(!cssClass.contains('sidebar-mini')){
+            replaceCssClass(document.body,['sidebar-mini','skin-blue']);
+        }
         document.title = this.props.title + ' | Klorofil Demo';
         return (
             <div className="wrapper">
