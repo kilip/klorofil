@@ -98,7 +98,10 @@
     "coveragePathIgnorePatterns": [
       "<rootDir>/(config|build|coverage|node_modules|public)"
     ],
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "coverageReporters": [
+      "lcov","text"
+    ]
   },
   "babel": {
     "presets": [
