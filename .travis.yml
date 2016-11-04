@@ -29,12 +29,13 @@ install:
     - composer install --dev --no-interaction
     - mkdir -p build/logs
     - npm install
-    - cd frontend && npm install
-    - echo $PWD
-    - cd $TRAVIS_BUILD_DIR
-    - echo $PWD
     - bin/console doctrine:database:create -n --env=test
     - bin/console doctrine:schema:update --force -n --env=test
+    # cd to frontend install frontend stuff
+    - cd frontend
+    - npm install
+    - npm build
+    - cd $TRAVIS_BUILD_DIR
 script:
     - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text
     - cd frontend
