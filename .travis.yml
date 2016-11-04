@@ -42,6 +42,4 @@ script:
     - cd $TRAVIS_BUIlD_DIR
 
 after_success:
-    - bash <(curl -s https://codecov.io/bash) -cF php
-    - cd frontend
-    - bash <(curl -s https://codecov.io/bash) -cF node
+    - bash <(curl -s https://codecov.io/bash)
