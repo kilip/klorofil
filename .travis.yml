@@ -27,7 +27,9 @@ install:
     - npm install
     - npm i coveralls
     - cd frontend && npm install
+    - echo $PWD
     - cd $TRAVIS_BUILD_DIR
+    - echo $PWD
     - bin/console doctrine:database:create -n --env=test
     - bin/console doctrine:schema:update --force -n --env=test
 script:
