@@ -34,7 +34,7 @@ install:
     # cd to frontend install frontend stuff
     - cd frontend
     - npm install
-    - npm build
+    - npm run build
     - cd $TRAVIS_BUILD_DIR
 script:
     - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text
