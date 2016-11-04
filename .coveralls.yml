@@ -1,3 +1,2 @@
 coverage_clover:
-    - build/logs/clover.xml
-    - frontend/coverage/clover.xml
+    - "build/logs/clover.xml"

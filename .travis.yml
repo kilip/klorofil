@@ -32,9 +32,9 @@ install:
 
 script:
     - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-    - cd frontend && npm run test -- --coverage && cd $TRAVIS_BUIlD_DIR
+    - cd frontend && npm run coveralls && cd $TRAVIS_BUIlD_DIR
 
 after_success:
-    - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.0/coveralls.phar
+    - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar
     - chmod +x coveralls.phar
     - travis_retry php coveralls.phar -v
