@@ -1,4 +1,5 @@
-language: php
+language: php, node_js
+node_js: 6
 git:
     depth: 1
 matrix:
@@ -14,15 +15,15 @@ before_install:
     - mkdir -p ./var/jwt
     - openssl genrsa -out var/jwt/private.pem 2048
     - openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
-
 install:
     - composer install --dev --no-interaction
-    # coveralls preparation
-    - composer require satooshi/php-coveralls
     - mkdir -p build/logs
+    - npm install
+    - npm build
 
 script:
     - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+    - npm test
 
-after_success:
-    - travis_retry php vendor/bin/coveralls -v
+#after_success:
+#    - travis_retry php vendor/bin/coveralls -v
