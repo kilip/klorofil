@@ -26,6 +26,7 @@ install:
     - mkdir -p build/logs
     - npm install
     - cd frontend && npm install
+    - cd $TRAVIS_BUILD_DIR
     - bin/console doctrine:database:create -n --env=test
 
 script:
