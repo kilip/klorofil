@@ -4,7 +4,11 @@
   "description": "Anthonius Munthi Demo Frontend",
   "main": "index.js",
   "scripts": {
-    "start": "nf start -j ForemanProcfile -p 3000"
+    "start": "nf start -j ForemanProcfile -p 3000",
+    "build": "cd frontend && npm build",
+    "test": "cd frontend && npm test",
+    "prepare": "npm install && cd frontend npm install",
+    "coveralls": "cat ./frontend/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",

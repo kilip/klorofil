@@ -6,7 +6,8 @@ import React, {
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { logout } from '../components/auth/actions';
-class NavMain extends Component {
+
+export class NavMain extends Component {
     pushMenu(){
         var body = document.body;
         if(body.clientWidth > 768){
@@ -23,9 +24,12 @@ class NavMain extends Component {
             }
         }
     }
+
+    logout(){
+        this.props.logout();
+    }
+
     render() {
-
-
         return (
             <header className="main-header">
                 <Link to="/" className="logo">
@@ -37,11 +41,15 @@ class NavMain extends Component {
                     role="navigation"
                 >
                     {/* Sidebar toggle button*/}
-                    <a href="#" className="sidebar-toggle" data-toggle="offcanvas" role="button" onClick={this.pushMenu.bind(this)}>
-                        <span className="sr-only">Toggle navigation</span>
+                    <a className="sidebar-toggle" data-toggle="offcanvas" role="button" onClick={this.pushMenu.bind(this)}>
+                        <span className="sr-only">Toggle Navigation</span>
                     </a>
                     <div className="navbar-custom-menu">
-
+                        <ul className="nav navbar-nav">
+                            <li>
+                                <a id="logout-link" onClick={this.logout.bind(this)} role="button">Logout</a>
+                            </li>
+                        </ul>
                     </div>
                 </nav>
             </header>
@@ -51,13 +59,16 @@ class NavMain extends Component {
 
 NavMain.propTypes = {
     logout: PropTypes.func.isRequired,
+};
+NavMain.contextTypes = {
 
 };
-NavMain.defaultProps = {};
 
-export default connect(
+NavMain = connect(
     state => ({
         me: state.me
     }),
     {logout}
 )(NavMain);
+
+export default NavMain;

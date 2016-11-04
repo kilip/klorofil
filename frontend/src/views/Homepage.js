@@ -6,7 +6,6 @@ class Homepage extends Component
     render() {
         return (
             <MainContainer title="Homepage" subtitle="Welcome to Klorofil">
-
             </MainContainer>
         );
     }

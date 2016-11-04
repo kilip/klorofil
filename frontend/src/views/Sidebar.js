@@ -2,11 +2,11 @@ import React,{Component} from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 
-class Sidebar extends Component
+export class Sidebar extends Component
 {
     adminMenu(){
         return(
-            <ul className="sidebar-menu">
+            <ul id="sidebarAdminMenu" className="sidebar-menu">
                 <li className="header">Admin Menu</li>
                 <li>
                     <Link to="/users">
@@ -18,7 +18,7 @@ class Sidebar extends Component
         );
     }
 
-    render(){
+    render(){;
         const isAdmin = this.props.me.isGranted('ROLE_ADMIN');
         return(
             <aside className="main-sidebar">
@@ -49,4 +49,6 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Sidebar);
+Sidebar = connect(mapStateToProps)(Sidebar);
+
+export default Sidebar;

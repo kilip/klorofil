@@ -1,11 +1,17 @@
 language: php
+sudo: required
+env:
+    - NODE_RELEASE=6.x
+php:
+  - 5.6
+  - 7
 git:
     depth: 1
-matrix:
-    include:
-        - php: 5.6
-        - php: 7.0
-
+cache:
+  directories:
+  - node_modules
+  - vendor
+  - frontend/node_modules
 before_install:
     - stty cols 120
     - INI_FILE=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
@@ -14,15 +20,27 @@ before_install:
     - mkdir -p ./var/jwt
     - openssl genrsa -out var/jwt/private.pem 2048
     - openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
+    # node installation
+    - sudo rm -rf ~/.nvm
+    - curl -sL "https://deb.nodesource.com/setup_${NODE_RELEASE}" | sudo -E bash -
+    - sudo apt-get install -y nodejs
 
 install:
     - composer install --dev --no-interaction
-    # coveralls preparation
-    - composer require satooshi/php-coveralls
     - mkdir -p build/logs
-
+    - npm install
+    - bin/console doctrine:database:create -n --env=test
+    - bin/console doctrine:schema:update --force -n --env=test
+    # cd to frontend install frontend stuff
+    - cd frontend
+    - npm install
+    - npm run build
+    - cd $TRAVIS_BUILD_DIR
 script:
-    - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+    - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text
+    - cd frontend
+    - npm test -- --coverage
+    - cd $TRAVIS_BUIlD_DIR
 
 after_success:
-    - travis_retry php vendor/bin/coveralls -v
+    - bash <(curl -s https://codecov.io/bash)

@@ -6,12 +6,14 @@ import NavMain from './NavMain';
 import Sidebar from './Sidebar';
 import { Link } from 'react-router';
 import { replaceCssClass } from './utils/dom';
-
+import { connect } from 'react-redux';
+import { removeFlashMessage } from '../components/util/flash-message';
+import FlashMessageList from './common/flash-message-list';
 
 export const LAYOUT_LOGIN   = 'layout.login';
 export const LAYOUT_DEFAULT = 'layout.default';
 
-class MainContainer extends Component {
+export class MainContainer extends Component {
 
     loginLayout(){
         replaceCssClass(document.body,'hold-transition login-page');
@@ -26,20 +28,20 @@ class MainContainer extends Component {
     }
 
     dashboardLayout(){
-        const { title, subtitle } = this.props;
-        replaceCssClass(document.body,'sidebar-mini skin-blue');
+        const { title, subtitle, removeFlashMessage } = this.props;
+
+        const body = document.body;
+        if(!body.classList.contains('sidebar-mini')){
+            replaceCssClass(document.body,['sidebar-mini','skin-blue']);
+        }
         document.title = this.props.title + ' | Klorofil Demo';
         return (
             <div className="wrapper">
-                <NavMain
-                />
+                <NavMain/>
                 <Sidebar/>
                 <div className="content-wrapper">
                     <section className="content-header">
-                        <h1>
-                            {title}
-                            <small>{subtitle}</small>
-                        </h1>
+                        <h1>{title} <small>{subtitle}</small></h1>
                         <ol className="breadcrumb">
                             <li>
                                 <Link to="/">
@@ -50,6 +52,7 @@ class MainContainer extends Component {
                         </ol>
                     </section>
                     <section className="content">
+                        <FlashMessageList removeFlashMessage={removeFlashMessage}/>
                         {this.props.children}
                     </section>
                 </div>
@@ -71,10 +74,14 @@ class MainContainer extends Component {
 MainContainer.propTypes = {
     layout: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    subtitle: PropTypes.string
+    subtitle: PropTypes.string,
+    removeFlashMessage: PropTypes.func.isRequired
 };
+
 MainContainer.defaultProps = {
     layout: LAYOUT_DEFAULT
 };
+
+MainContainer = connect(null,{removeFlashMessage})(MainContainer);
 
 export default MainContainer;

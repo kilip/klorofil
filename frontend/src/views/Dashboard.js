@@ -12,7 +12,7 @@ import './assets/style.css';
 class Dashboard extends Component {
     render() {
         return (
-            <div>
+            <div className="dashboard-wrapper wrapper">
                 {this.props.children}
             </div>
         );
