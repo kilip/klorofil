@@ -28,6 +28,7 @@ install:
     - cd frontend && npm install
     - cd $TRAVIS_BUILD_DIR
     - bin/console doctrine:database:create -n --env=test
+    - bin/console doctrine:schema:update --force -n --env=test
 
 script:
     - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
