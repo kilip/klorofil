@@ -10,7 +10,7 @@
  */
 
 
-namespace Demo\FrontendBundle\Controller;
+namespace Demo\FrontendBundle\Tests\Controller;
 
 
 use Demo\BackendBundle\Test\DemoTestCase;
@@ -23,6 +23,6 @@ class HomeControllerTest extends DemoTestCase
         $client = static::createClient();
         $client->request('GET','/');
         $response = $client->getResponse();
-        $this->assertEquals(Response::HTTP_PERMANENTLY_REDIRECT,$response->getStatusCode());
+        $this->assertEquals(Response::HTTP_OK,$response->getStatusCode());
     }
 }
