@@ -9,12 +9,11 @@ import { replaceCssClass } from './utils/dom';
 import { connect } from 'react-redux';
 import { removeFlashMessage } from '../components/util/flash-message';
 import FlashMessageList from './common/flash-message-list';
-import _ from 'lodash';
 
 export const LAYOUT_LOGIN   = 'layout.login';
 export const LAYOUT_DEFAULT = 'layout.default';
 
-class MainContainer extends Component {
+export class MainContainer extends Component {
 
     loginLayout(){
         replaceCssClass(document.body,'hold-transition login-page');
@@ -31,22 +30,18 @@ class MainContainer extends Component {
     dashboardLayout(){
         const { title, subtitle, removeFlashMessage } = this.props;
 
-        const cssClass = document.body.classList;
-        if(!cssClass.contains('sidebar-mini')){
+        const body = document.body;
+        if(!body.classList.contains('sidebar-mini')){
             replaceCssClass(document.body,['sidebar-mini','skin-blue']);
         }
         document.title = this.props.title + ' | Klorofil Demo';
         return (
             <div className="wrapper">
-                <NavMain
-                />
+                <NavMain/>
                 <Sidebar/>
                 <div className="content-wrapper">
                     <section className="content-header">
-                        <h1>
-                            {title}
-                            <small>{subtitle}</small>
-                        </h1>
+                        <h1>{title} <small>{subtitle}</small></h1>
                         <ol className="breadcrumb">
                             <li>
                                 <Link to="/">
@@ -87,4 +82,6 @@ MainContainer.defaultProps = {
     layout: LAYOUT_DEFAULT
 };
 
-export default connect(null,{removeFlashMessage})(MainContainer);
+MainContainer = connect(null,{removeFlashMessage})(MainContainer);
+
+export default MainContainer;

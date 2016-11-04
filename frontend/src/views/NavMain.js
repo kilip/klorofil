@@ -6,11 +6,9 @@ import React, {
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { logout } from '../components/auth/actions';
-import history from '../history';
 
-class NavMain extends Component {
-    pushMenu(e){
-        e.preventDefault();
+export class NavMain extends Component {
+    pushMenu(){
         var body = document.body;
         if(body.clientWidth > 768){
             if(body.className.indexOf('sidebar-collapse') === -1){
@@ -27,10 +25,8 @@ class NavMain extends Component {
         }
     }
 
-    logout(e){
-        e.preventDefault();
+    logout(){
         this.props.logout();
-        history.push('/login');
     }
 
     render() {
@@ -46,12 +42,12 @@ class NavMain extends Component {
                 >
                     {/* Sidebar toggle button*/}
                     <a className="sidebar-toggle" data-toggle="offcanvas" role="button" onClick={this.pushMenu.bind(this)}>
-                        <span className="sr-only">Toggle navigation</span>
+                        <span className="sr-only">Toggle Navigation</span>
                     </a>
                     <div className="navbar-custom-menu">
                         <ul className="nav navbar-nav">
                             <li>
-                                <a href="#" onClick={this.logout.bind(this)}>Logout</a>
+                                <a id="logout-link" onClick={this.logout.bind(this)} role="button">Logout</a>
                             </li>
                         </ul>
                     </div>
@@ -64,11 +60,15 @@ class NavMain extends Component {
 NavMain.propTypes = {
     logout: PropTypes.func.isRequired,
 };
-NavMain.defaultProps = {};
+NavMain.contextTypes = {
 
-export default connect(
+};
+
+NavMain = connect(
     state => ({
         me: state.me
     }),
     {logout}
 )(NavMain);
+
+export default NavMain;

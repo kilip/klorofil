@@ -52,12 +52,11 @@ class LoginForm extends Component {
 
 LoginForm.propTypes = {
     login: PropTypes.func.isRequired,
-    me: PropTypes.object.isRequired,
-    tokenExpired: PropTypes.func.isRequired
+    me: PropTypes.object.isRequired
 };
 
 LoginForm.contextTypes = {
-    router: PropTypes.object.isRequired
+    router: PropTypes.object
 };
 
 LoginForm.defaultProps = {};
@@ -66,6 +65,8 @@ LoginForm = reduxForm({
     form: 'login'
 })(LoginForm);
 
-export default connect(state=>({
+LoginForm =  connect(state=>({
     me: state.me
 }),{login,tokenExpired})(LoginForm);
+
+export default LoginForm;
