@@ -24,12 +24,12 @@ before_install:
 install:
     - composer install --dev --no-interaction
     - mkdir -p build/logs
-    - npm prepare
-    - npm build
+    - npm run prepare
+    - npm run build
 
 script:
     - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-    - npm test
+    - npm run test
 
 #after_success:
 #    - travis_retry php vendor/bin/coveralls -v
