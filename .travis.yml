@@ -29,7 +29,6 @@ install:
     - composer install --dev --no-interaction
     - mkdir -p build/logs
     - npm install
-    - npm i coveralls
     - cd frontend && npm install
     - echo $PWD
     - cd $TRAVIS_BUILD_DIR
@@ -44,6 +43,7 @@ script:
 
 after_success:
     - cd $TRAVIS_BUILD_DIR
+    - npm i coveralls
     - cat ./frontend/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.j
     - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar
     - chmod +x coveralls.phar
