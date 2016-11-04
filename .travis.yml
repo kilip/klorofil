@@ -24,8 +24,9 @@ before_install:
 install:
     - composer install --dev --no-interaction
     - mkdir -p build/logs
-    - npm run prepare
-    - npm run build
+    - npm install
+    - cd frontend && npm install
+    - bin/console doctrine:database:create -n --env=test
 
 script:
     - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
