@@ -24,12 +24,15 @@ before_install:
     - sudo rm -rf ~/.nvm
     - curl -sL "https://deb.nodesource.com/setup_${NODE_RELEASE}" | sudo -E bash -
     - sudo apt-get install -y nodejs
+    - npm install -g codeclimate-test-reporter
 
 install:
     - composer install --dev --no-interaction
+    - composer require --dev codeclimate/php-test-reporter dev-master
     - mkdir -p build/logs
     - bin/console doctrine:database:create -n --env=test
     - bin/console doctrine:schema:update --force -n --env=test
+    - cd frontend
 
 script:
     - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text
@@ -38,4 +41,5 @@ script:
     - cd $TRAVIS_BUILD_DIR
 
 after_success:
-    - bash <(curl -s https://codecov.io/bash)
+    - ./vendor/bin/test-reporter
+    - codeclimate-test-reporter < frontend/coverage/lcov.info
