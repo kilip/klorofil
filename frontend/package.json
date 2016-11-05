@@ -56,7 +56,6 @@
     "admin-lte": "^2.3.7",
     "bootstrap": "^3.3.7",
     "classnames": "^2.2.5",
-    "dotenv": "^2.0.0",
     "font-awesome": "^4.7.0",
     "jwt-decode": "^2.1.0",
     "lodash": "^4.16.5",
