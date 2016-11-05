@@ -1,6 +1,6 @@
 import React, {
     Component,
-    PropTypes,
+    PropTypes
 } from 'react';
 
 import { Link } from 'react-router';
@@ -58,7 +58,7 @@ export class NavMain extends Component {
 }
 
 NavMain.propTypes = {
-    logout: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired
 };
 NavMain.contextTypes = {
 

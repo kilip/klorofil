@@ -25,7 +25,7 @@ export function removeFlashMessage(id){
 
 export default (state = [], action = {}) => {
     switch(action.type) {
-        case ADD:
+        case ADD: {
             return [
                 ...state,
                 {
@@ -34,7 +34,8 @@ export default (state = [], action = {}) => {
                     text: action.payload.text
                 }
             ];
-        case REMOVE:
+        }
+        case REMOVE: {
             const index = findIndex(state, { id: action.payload.id });
             if (index >= 0) {
                 return [
@@ -43,7 +44,9 @@ export default (state = [], action = {}) => {
                 ];
             }
             return state;
-
-        default: return state;
+        }
+        default: {
+            return state;
+        }
     }
 }

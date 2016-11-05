@@ -1,6 +1,6 @@
 import React, {
     Component,
-    PropTypes,
+    PropTypes
 } from 'react';
 import NavMain from './NavMain';
 import Sidebar from './Sidebar';

@@ -6,7 +6,7 @@ env:
   amd: true
   browser: true
   es6: true
-  jquery: true
+  jquery: false
   node: true
 
 # http://eslint.org/docs/rules/

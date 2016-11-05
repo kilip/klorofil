@@ -1,6 +1,6 @@
 import React, {
     Component,
-    PropTypes,
+    PropTypes
 } from 'react';
 import { connect } from 'react-redux';
 import FlashMessage from './flash-message';

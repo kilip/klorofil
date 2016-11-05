@@ -1,5 +1,5 @@
 import React, {
-    Component,
+    Component
 } from 'react';
 
 import MainContainer,{LAYOUT_LOGIN} from './MainContainer';

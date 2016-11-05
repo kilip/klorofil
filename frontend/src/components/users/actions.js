@@ -15,7 +15,6 @@ export function userReducer(state=initialState,action){
         case SEARCH_START:
             pager.loading = true;
             pager.loaded = false;
-
             return {
                 ...state,
                 pager

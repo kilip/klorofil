@@ -1,6 +1,6 @@
 import React, {
     Component,
-    PropTypes,
+    PropTypes
 } from 'react';
 
 class Pager extends Component {
