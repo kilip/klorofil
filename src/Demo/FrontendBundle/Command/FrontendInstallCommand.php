@@ -48,9 +48,9 @@ class FrontendInstallCommand extends ContainerAwareCommand
         $process = new Process($script);
         $process->run(function($type,$buffer) use ($output){
             if (Process::OUT === $type) {
-                $output->writeln("<info>OUT:</info> ".$buffer);
+                $output->write("<info>OUT:</info> ".$buffer);
             } else { // $process::ERR === $type
-                $output->writeln("<error>ERR:</error> ".$buffer);
+                $output->write("<error>ERR:</error> ".$buffer);
             }
         });
     }
