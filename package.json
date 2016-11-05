@@ -10,7 +10,7 @@
     "prepare": "npm install && cd frontend npm install",
     "coveralls": "cat ./frontend/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js",
     "install": "cd frontend && npm install",
-    "postinstall": "cd frontend && npm build"
+    "postinstall": "cd frontend && npm run build"
   },
   "repository": {
     "type": "git",
