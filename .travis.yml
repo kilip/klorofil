@@ -31,7 +31,6 @@ install:
     - mkdir -p build/logs
     - bin/console doctrine:database:create -n --env=test
     - bin/console doctrine:schema:update --force -n --env=test
-    - npm i codeclimate-test-reporter
 
 script:
     - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text
@@ -41,4 +40,4 @@ script:
 
 after_success:
     - ./vendor/bin/test-reporter
-    - node ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < frontend/coverage/lcov.info
+    - bash <(curl -s https://codecov.io/bash)

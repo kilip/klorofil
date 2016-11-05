@@ -18,7 +18,7 @@ export class Sidebar extends Component
         );
     }
 
-    render(){;
+    render(){
         const isAdmin = this.props.me.isGranted('ROLE_ADMIN');
         return(
             <aside className="main-sidebar">
