@@ -1,0 +1,56 @@
+<?php
+
+namespace Demo\FrontendBundle\Command;
+
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
+
+class FrontendInstallCommand extends ContainerAwareCommand
+{
+    /**
+     * {@inheritdoc}
+     */
+    protected function configure()
+    {
+        $this
+            ->setName('frontend:install')
+            ->setDescription('Hello PhpStorm');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $cwd = getcwd();
+        chdir($cwd.'/frontend');
+
+        $scripts = [
+            'npm install',
+            'npm build'
+        ];
+
+        foreach($scripts as $script){
+            try{
+                $this->doProcess($script,$output);
+            }catch (\Exception $e){
+                chdir($cwd);
+                throw $e;
+            }
+        }
+    }
+
+    private function doProcess($script,OutputInterface $output)
+    {
+        $process = new Process($script);
+        $process->run(function($type,$buffer) use ($output){
+            if (Process::OUT === $type) {
+                $output->writeln("<info>OUT:</info> ".$buffer);
+            } else { // $process::ERR === $type
+                $output->writeln("<error>ERR:</error> ".$buffer);
+            }
+        });
+    }
+}

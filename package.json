@@ -8,9 +8,7 @@
     "build": "cd frontend && npm build",
     "test": "cd frontend && npm test",
     "prepare": "npm install && cd frontend npm install",
-    "coveralls": "cat ./frontend/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js",
-    "install": "cd frontend && npm install",
-    "postinstall": "cd frontend && npm build"
+    "coveralls": "cat ./frontend/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",
