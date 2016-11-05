@@ -6,5 +6,4 @@ Demo Application
 [![Issue Count](https://codeclimate.com/github/klorofil/klorofil/badges/issue_count.svg)](https://codeclimate.com/github/klorofil/klorofil)
 [![Code Climate](https://codeclimate.com/github/klorofil/klorofil/badges/gpa.svg)](https://codeclimate.com/github/klorofil/klorofil)
 
-
 My Demo Application
