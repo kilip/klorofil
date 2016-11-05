@@ -28,19 +28,14 @@ before_install:
 install:
     - composer install --dev --no-interaction
     - mkdir -p build/logs
-    - npm install
     - bin/console doctrine:database:create -n --env=test
     - bin/console doctrine:schema:update --force -n --env=test
-    # cd to frontend install frontend stuff
-    - cd frontend
-    - npm install
-    - npm run build
-    - cd $TRAVIS_BUILD_DIR
+
 script:
     - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text
     - cd frontend
     - npm test -- --coverage
-    - cd $TRAVIS_BUIlD_DIR
+    - cd $TRAVIS_BUILD_DIR
 
 after_success:
     - bash <(curl -s https://codecov.io/bash)
