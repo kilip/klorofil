@@ -29,7 +29,7 @@ class FrontendInstallCommand extends ContainerAwareCommand
 
         $scripts = [
             'npm install',
-            'npm build'
+            'npm run build'
         ];
 
         foreach($scripts as $script){
@@ -44,6 +44,7 @@ class FrontendInstallCommand extends ContainerAwareCommand
 
     private function doProcess($script,OutputInterface $output)
     {
+        $output->writeln('Processing frontend script: <info>'.$script.'</info>');
         $process = new Process($script);
         $process->run(function($type,$buffer) use ($output){
             if (Process::OUT === $type) {
