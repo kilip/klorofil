@@ -10,7 +10,7 @@
     "prepare": "npm install && cd frontend npm install",
     "coveralls": "cat ./frontend/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js",
     "install": "cd frontend && npm install",
-    "postinstall": "cd frontend && npm build"
+    "postinstall": "cd frontend && npm run build"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/kilip/demo/issues"
   },
-  "homepage": "http://tonidemo.herokuapp.com/",
+  "homepage": "http://tonidemo.herokuapp.com/dist",
   "dependencies": {},
   "devDependencies": {
     "foreman": "^2.0.0"
