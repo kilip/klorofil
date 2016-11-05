@@ -28,6 +28,7 @@ class FrontendInstallCommand extends ContainerAwareCommand
         chdir($cwd.'/frontend');
 
         $scripts = [
+            'rm -Rf node_modules',
             'npm install',
             'npm run build'
         ];
