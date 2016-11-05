@@ -8,7 +8,7 @@ function getSearchUserSetting(action,store){
 
     return {
         method: 'GET',
-        url: 'http://localhost:8000'+data.url,
+        url: process.env.REACT_APP_API_URI+data.url,
         headers: {
             'Authorization': 'Bearer '+token
         },
