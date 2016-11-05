@@ -2,12 +2,14 @@ import React, {
     Component,
 } from 'react';
 
+import MainContainer from './MainContainer';
+
 class Unauthorized extends Component {
     render() {
         return (
-            <div>
+            <MainContainer title="Unauthorized">
                 <h1>You don't have enough access to this page</h1>
-            </div>
+            </MainContainer>
         );
     }
 }

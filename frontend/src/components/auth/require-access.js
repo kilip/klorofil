@@ -13,9 +13,17 @@ export function isGranted(role){
 export const isAuthenticated = UserAuthWrapper({
     authSelector: (state) => state.me,
     predicate: me => !me.isTokenExpired(),
-    redirectAction: routerActions.replace,
+    redirectAction: routerActions.push,
     failureRedirectPath: '/login',
     wrapperDisplayName: 'UserIsAuthenticated'
+});
+
+export const isNotAuthenticated = UserAuthWrapper({
+    authSelector: (state) => state.me,
+    predicate: me => !me.authenticated,
+    redirectAction: routerActions.push,
+    failureRedirectPath: '/',
+    wrapperDisplayName: 'UserIsNotAuthenticated'
 });
 
 export const isUserAdmin = isGranted('ROLE_ADMIN');

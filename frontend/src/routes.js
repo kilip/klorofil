@@ -8,12 +8,12 @@ import Unauthorized from './views/Unauthorized';
 
 import User from './views/user/users';
 import ListUser from './views/user/list';
-import { isAuthenticated,isUserAdmin } from './components/auth/require-access';
+import { isAuthenticated,isUserAdmin, isNotAuthenticated } from './components/auth/require-access';
 
 export default(
     <Route path="/" component={Dashboard}>
+        <Route path="login" component={isNotAuthenticated(Login)}/>
         <IndexRoute component={isAuthenticated(Homepage)} />
-        <Route path="login" component={Login}/>
         <Route path="unauthorized" components={Unauthorized}/>
 
         <Route path="users" component={isAuthenticated(isUserAdmin(User))}>

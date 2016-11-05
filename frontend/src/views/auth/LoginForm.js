@@ -8,30 +8,15 @@ import { Field, reduxForm } from 'redux-form';
 import TextFieldGroup from '../common/TextFieldGroup';
 
 class LoginForm extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            submit: false,
-        }
-    }
     onSubmit(values){
-        this.setState({submit: true});
         this.props.login(values);
-        this.setState({submit:false});
-    }
-
-    componentWillUpdate(nextProps){
-        if(nextProps.me.authenticated && ! nextProps.me.isTokenExpired()){
-            this.context.router.push('/');
-        }
     }
 
     render() {
-        const {handleSubmit,submitting,pristine} = this.props;
-        const { submit } = this.state;
+        const { handleSubmit,submitting,pristine} = this.props;
         const { error } = this.props.me;
         return (
-            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+            <form id="login-form" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 { error && <div className="alert alert-danger">{error}</div> }
                 <Field
                     name="username"
@@ -44,7 +29,7 @@ class LoginForm extends Component {
                     type="password"
                     component={TextFieldGroup}
                 />
-                <button type="submit" disabled={pristine || submitting || submit}>Login</button>
+                <button id="login" type="submit" disabled={pristine || submitting}>Login</button>
             </form>
         );
     }

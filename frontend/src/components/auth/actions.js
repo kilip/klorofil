@@ -1,5 +1,3 @@
-import history from '../../history';
-import { addFlashMessage } from '../util/flash-message';
 import store from '../../store';
 export const AUTH_TOKEN_STORAGE_KEY = 'klorofil.auth.token';
 export const LOGIN_START        = 'auth.login.start';
@@ -33,8 +31,6 @@ export function setAuthToken(token){
 }
 
 export function tokenExpired(){
-    store.dispatch(addFlashMessage('error','Your login session is expired, please login again'));
-    history.push('/login');
     return {
         type: LOGOUT,
         payload: {}

@@ -10,7 +10,6 @@ export function authEpic(action$){
                     payload => ({
                         type: LOGIN_RESULT,
                         token: payload.response.token,
-                        redirect: action.payload.redirect,
                         payload
                     })
                 )

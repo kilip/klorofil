@@ -1,36 +1,44 @@
 import React from 'react';
-import { shallow,mount } from 'enzyme';
+import { mount } from 'enzyme';
 import Login from './Login';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
 
-function getComponent(state = {}, mockFn = jest.fn()){
-    var isGranted = new mockFn();
-    var router = new mockFn();
-    state = {
-        flash: [],
-        me: {
-            isGranted
-        }
-    };
+function getComponent(props ={},state = {}, context = {}){
     return mount(
-        <Provider store={mockStore(state)}>
+        <Provider {...props} store={mockStore(state)}>
             <Login/>
-        </Provider>,
-        {
-            context: {
-                router
-            }
-        }
+        </Provider>, {context}
     );
 }
 
 describe('<Login/>', () => {
+    var mockFn = jest.fn();
+    var isGranted = new mockFn();
+    const isTokenExpired = jest.fn();
+    var mcLogin = new mockFn();
+    var props = {
+        login: mcLogin
+    };
+
+    const state = {
+        flash: [],
+        me: {
+            authenticated: true,
+            isGranted,
+            isTokenExpired
+        }
+    };
 
     it('should rendered properly', () => {
-
-        const wrapper = getComponent();
-
+        const wrapper = getComponent(props,state);
         expect(wrapper.text()).toContain('Hello');
+    });
+
+    it('should handle login properly', () => {
+        const wrapper = getComponent(props,state);
+        const btnLogin = wrapper.find('#login-form');
+        expect(btnLogin.length).toBe(1);
+        btnLogin.simulate('submit');
+        expect(mockFn).toBeCalled();
     });
 });
