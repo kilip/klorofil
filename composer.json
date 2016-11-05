@@ -77,7 +77,9 @@
                 "secret": "SYMFONY_SECRET",
                 "jwt_key_pass_phrase": "JWT_KEY_PASS_PHRASE",
                 "database_url": "DATABASE_URL",
-                "monolog_action_level": "LOG_LEVEL"
+                "monolog_action_level": "LOG_LEVEL",
+                "demo.backend_url": "DEMO_BACKEND_URL",
+                "demo.frontend_url": "DEMO_FRONTEND_URL"
             }
         }
     }
