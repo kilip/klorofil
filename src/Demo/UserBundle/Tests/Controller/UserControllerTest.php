@@ -20,7 +20,7 @@ class UserControllerTest extends DemoTestCase
         $helper->create('toni','foo');
 
         $client = $this->createAuthenticatedClient();
-        $client->request('GET','/api/users?sorting[id]=ASC');
+        $client->request('GET','/api/users?sorting[id]=ASC&limit=5');
         $response = $client->getResponse();
         $this->assertEquals(Response::HTTP_OK,$response->getStatusCode());
         //ResponseAsserter::assertResponsePropertyEquals($response,'_embedded.items[0].username','test_create');

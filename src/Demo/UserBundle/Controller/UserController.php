@@ -44,16 +44,15 @@ class UserController extends FOSRestController
         $page = $request->get('page',1);
         $sorts = $request->get('sorts',['fullname' => 'ASC']);
 
+        // max per page must be set before current page!
         $pager = $this->get('demo.user.manager')->getListPager($sorts);
-        $factory = new PagerfantaFactory();
-        $pager->setCurrentPage($page);
         $pager->setMaxPerPage($limit);
+        $pager->setCurrentPage($page);
         $route = new Route('api_user_list',[
-            'limit' => $limit,
-            'page' => $page,
             'sorts' => $sorts
         ]);
 
+        $factory = new PagerfantaFactory('page','limit');
         return $factory->createRepresentation($pager,$route);
     }
 
