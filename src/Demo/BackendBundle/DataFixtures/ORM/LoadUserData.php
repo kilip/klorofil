@@ -13,12 +13,11 @@ namespace Demo\BackendBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Demo\UserBundle\Entity\User;
 use Faker\Factory as Faker;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadUserData implements FixtureInterface,ContainerAwareInterface
+class LoadUserData implements FixtureInterface, ContainerAwareInterface
 {
     /**
      * @var array
@@ -76,9 +75,9 @@ class LoadUserData implements FixtureInterface,ContainerAwareInterface
                 $baseImageUrl.'/female-3.png',
             ]
         ];
-        $genders = ['male','female'];
-        for($i=1;$i<=500;$i++){
-            $gender = $genders[array_rand(['male','female'])];
+        $genders = ['male', 'female'];
+        for ($i = 1; $i<=500; $i++) {
+            $gender = $genders[array_rand(['male', 'female'])];
             $avatar = $avatars[$gender][array_rand($avatars[$gender])];
             $user = $manager->createUser();
             $user->setUsername($this->generateUsername());
@@ -87,8 +86,8 @@ class LoadUserData implements FixtureInterface,ContainerAwareInterface
             $user->setPlainPassword('fakeruser');
             $user->addRole('ROLE_USER');
             $user->setAvatar($avatar);
-            $manager->updateUser($user,false);
-            if(($i%25)===0){
+            $manager->updateUser($user, false);
+            if (($i%25) === 0) {
                 $om->flush();
             }
         }
@@ -98,7 +97,7 @@ class LoadUserData implements FixtureInterface,ContainerAwareInterface
     {
         $faker = Faker::create();
         $username = $faker->userName;
-        if(in_array($username,$this->usernames)){
+        if (in_array($username, $this->usernames)) {
             return $this->generateUsername();
         }
         $this->usernames[] = $username;

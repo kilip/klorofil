@@ -26,14 +26,14 @@ class HomeController extends Controller
         ;
 
         $mainCss = $mainScript = '';
-        foreach($finder->files() as $file){
-            if('css' == $file->getExtension()){
+        foreach ($finder->files() as $file) {
+            if ('css' == $file->getExtension()) {
                 $mainCss = 'dist/'.$file->getRelativePathname();
-            }else{
+            } else {
                 $mainScript = 'dist/'.$file->getRelativePathname();
             }
         }
-        return $this->render('@Frontend/main/index.html.twig',[
+        return $this->render('@Frontend/main/index.html.twig', [
             'main_script' => $mainScript,
             'main_css' => $mainCss,
         ]);

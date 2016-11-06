@@ -39,15 +39,15 @@ class TokenController extends Controller
                 '_error' => 'Either your username or password is invalid.',
             ]
         ];
-        if(!$user){
-            return new JsonResponse($invalidUser,Response::HTTP_UNAUTHORIZED);
+        if (!$user) {
+            return new JsonResponse($invalidUser, Response::HTTP_UNAUTHORIZED);
         }
 
         $isValid = $this->get('security.password_encoder')
-            ->isPasswordValid($user,$password)
+            ->isPasswordValid($user, $password)
         ;
-        if(!$isValid){
-            return new JsonResponse($invalidUser,Response::HTTP_UNAUTHORIZED);
+        if (!$isValid) {
+            return new JsonResponse($invalidUser, Response::HTTP_UNAUTHORIZED);
         }
         $token = $this->get('lexik_jwt_authentication.encoder')
             ->encode([
@@ -58,7 +58,7 @@ class TokenController extends Controller
             ])
         ;
 
-        return new JsonResponse(['token' => $token],Response::HTTP_OK);
+        return new JsonResponse(['token' => $token], Response::HTTP_OK);
     }
 }
 

@@ -6,7 +6,6 @@ use Demo\UserBundle\Entity\User;
 use Demo\UserBundle\Form\RegistrationType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\UserBundle\Form\Type\ProfileFormType;
 use Hateoas\Configuration\Route;
 use Hateoas\Representation\Factory\PagerfantaFactory;
 use Symfony\Component\Form\FormInterface;
@@ -36,24 +35,24 @@ class UserController extends FOSRestController
      * @Rest\Get("/users",name="api_user_list")
      * @Rest\View()
      * @param Request $request
-     * @return mixed
+     * @return \Hateoas\Representation\PaginatedRepresentation
      */
     public function listAction(Request $request)
     {
-        $limit = $request->get('limit',10);
-        $page = $request->get('page',1);
-        $sorts = $request->get('sorts',['fullname' => 'ASC']);
+        $limit = $request->get('limit', 10);
+        $page = $request->get('page', 1);
+        $sorts = $request->get('sorts', ['fullname' => 'ASC']);
 
         // max per page must be set before current page!
         $pager = $this->get('demo.user.manager')->getListPager($sorts);
         $pager->setMaxPerPage($limit);
         $pager->setCurrentPage($page);
-        $route = new Route('api_user_list',[
+        $route = new Route('api_user_list', [
             'sorts' => $sorts
         ]);
 
-        $factory = new PagerfantaFactory('page','limit');
-        return $factory->createRepresentation($pager,$route);
+        $factory = new PagerfantaFactory('page', 'limit');
+        return $factory->createRepresentation($pager, $route);
     }
 
     /**
@@ -83,7 +82,7 @@ class UserController extends FOSRestController
     public function getAction($username)
     {
         $user = $this->get('fos_user.user_manager')->findUserByUsername($username);
-        $view = $this->view($user,Response::HTTP_OK);
+        $view = $this->view($user, Response::HTTP_OK);
 
         return $view;
     }
@@ -104,18 +103,18 @@ class UserController extends FOSRestController
      * @Rest\Patch("/users/{username}",name="api_user_update")
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function updateAction($username,Request $request)
+    public function updateAction($username, Request $request)
     {
         $manager = $this->get('fos_user.user_manager');
-        $data = json_decode($request->getContent(),true);
+        $data = json_decode($request->getContent(), true);
         $user = $manager->findUserByUsername($username);
-        $form = $this->createForm(RegistrationType::class,$user,[
+        $form = $this->createForm(RegistrationType::class, $user, [
             'validation_groups' => 'Profile'
         ]);
         $form->submit($data);
-        if($form->isValid()){
+        if ($form->isValid()) {
             $manager->updateUser($user);
-            return $this->view($user,Response::HTTP_ACCEPTED);
+            return $this->view($user, Response::HTTP_ACCEPTED);
         }
         $data = [
             'errors' => $this->getErrorsFromForm($form),
@@ -123,7 +122,7 @@ class UserController extends FOSRestController
             'title' => 'There was a validation error',
             'data' => $form->getData()
         ];
-        return $this->view($data,Response::HTTP_BAD_REQUEST);
+        return $this->view($data, Response::HTTP_BAD_REQUEST);
 
     }
 

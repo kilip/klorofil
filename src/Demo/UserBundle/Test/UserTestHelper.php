@@ -39,20 +39,20 @@ class UserTestHelper
         return $this->manager;
     }
 
-    public function create($username,$password,$email=null,$fullname=null,$role='ROLE_USER')
+    public function create($username, $password, $email = null, $fullname = null, $role = 'ROLE_USER')
     {
         $faker = Faker::create();
         $manager = $this->manager;
 
-        if(is_null($fullname)){
+        if (is_null($fullname)) {
             $fullname = $faker->name;
         }
-        if(is_null($email)){
+        if (is_null($email)) {
             $email = $faker->email;
         }
 
         /* @var \Demo\UserBundle\Entity\User $user */
-        if(is_null($user = $manager->findUserByUsername($username))){
+        if (is_null($user = $manager->findUserByUsername($username))) {
             $user = $this->getManager()->createUser();
         }
         $user->setFullname($fullname);
@@ -62,7 +62,7 @@ class UserTestHelper
             ->setEmail($email)
             ->setEnabled(true)
         ;
-        if(!$user->hasRole($role)){
+        if (!$user->hasRole($role)) {
             $user->addRole($role);
         }
         $manager->updateUser($user);
@@ -73,7 +73,7 @@ class UserTestHelper
     public function delete($username)
     {
         $manager = $this->manager;
-        if(!is_null($user = $manager->findUserByUsername($username))){
+        if (!is_null($user = $manager->findUserByUsername($username))) {
             $manager->deleteUser($user);
         }
     }

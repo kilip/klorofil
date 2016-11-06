@@ -33,21 +33,21 @@ class FrontendInstallCommand extends ContainerAwareCommand
             'npm run build'
         ];
 
-        foreach($scripts as $script){
-            try{
-                $this->doProcess($script,$output);
-            }catch (\Exception $e){
+        foreach ($scripts as $script) {
+            try {
+                $this->doProcess($script, $output);
+            } catch (\Exception $e) {
                 chdir($cwd);
                 throw $e;
             }
         }
     }
 
-    private function doProcess($script,OutputInterface $output)
+    private function doProcess($script, OutputInterface $output)
     {
         $output->writeln('Processing frontend script: <info>'.$script.'</info>');
         $process = new Process($script);
-        $process->run(function($type,$buffer) use ($output){
+        $process->run(function($type, $buffer) use ($output){
             if (Process::OUT === $type) {
                 $output->write('<info>'.$buffer.'</info>');
             } else { // $process::ERR === $type

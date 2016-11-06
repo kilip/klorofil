@@ -16,7 +16,7 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fullname',TextType::class,[
+            ->add('fullname', TextType::class, [
                 'description' => 'A user fullname'
             ])
             ->add('email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
@@ -30,7 +30,7 @@ class RegistrationType extends AbstractType
             ))
         ;
 
-        if(in_array('Profile',$options['validation_groups'])){
+        if (in_array('Profile', $options['validation_groups'])) {
             $builder
                 ->remove('plainPassword')
                 ->remove('username')
