@@ -24,7 +24,7 @@ class UserExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
-        if($container->getParameter('kernel.environment') == 'test'){
+        if ($container->getParameter('kernel.environment') == 'test') {
             $loader->load('test-helper.xml');
         }
     }

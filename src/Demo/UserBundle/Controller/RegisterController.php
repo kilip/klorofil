@@ -31,23 +31,23 @@ class RegisterController extends FOSRestController
     public function createAction(Request $request)
     {
         $user = new User();
-        $data = json_decode($request->getContent(),true);
-        $form = $this->createForm(RegistrationType::class,$user);
+        $data = json_decode($request->getContent(), true);
+        $form = $this->createForm(RegistrationType::class, $user);
         $form->submit($data);
-        if(!$form->isValid()){
+        if (!$form->isValid()) {
             $data = [
                 'errors' => $this->getErrorsFromForm($form),
                 'type' => 'validation_error',
                 'title' => 'There was a validation error',
                 'data' => $form->getData()
             ];
-            return $this->view($data,Response::HTTP_BAD_REQUEST);
+            return $this->view($data, Response::HTTP_BAD_REQUEST);
         }
 
         $manager = $this->get('fos_user.user_manager');
         $manager->updateUser($user);
-        $view = $this->view($user,Response::HTTP_CREATED);
-        $view->getResponse()->headers->set('Location',$this->generateUrl('api_user_get',['username' => $user->getUsername()]));
+        $view = $this->view($user, Response::HTTP_CREATED);
+        $view->getResponse()->headers->set('Location', $this->generateUrl('api_user_get', ['username' => $user->getUsername()]));
         return $view;
     }
 
@@ -61,7 +61,7 @@ class RegisterController extends FOSRestController
         foreach ($form->all() as $childForm) {
             if ($childForm instanceof FormInterface) {
                 if ($childErrors = $this->getErrorsFromForm($childForm)) {
-                    if(!in_array($childForm->getName(),$errors)){
+                    if (!in_array($childForm->getName(), $errors)) {
                         $errors[$childForm->getName()] = $childErrors;
                     }
                 }

@@ -45,7 +45,7 @@ class DemoTestCase extends WebTestCase
      */
     public function getService($id)
     {
-        if(is_null(static::$kernel)){
+        if (is_null(static::$kernel)) {
             static::bootKernel();
         }
         $kernel = static::createClient()->getKernel();
@@ -70,19 +70,19 @@ class DemoTestCase extends WebTestCase
         return $client;
     }
 
-    protected function createAuthenticatedClient($role="ROLE_SUPER_ADMIN",$username='testuser',$password='testuser',$email='test@user.com',$fullname='Test User')
+    protected function createAuthenticatedClient($role = "ROLE_SUPER_ADMIN", $username = 'testuser', $password = 'testuser', $email = 'test@user.com', $fullname = 'Test User')
     {
         $id = md5($role.$username);
-        if(!($client=static::$authenticatedClients[$id])){
-            $user = $this->helperUserCreate($username,$password,$email,$fullname,$role);
+        if (!($client = static::$authenticatedClients[$id])) {
+            $user = $this->helperUserCreate($username, $password, $email, $fullname, $role);
             $client = static::createClient();
-            $client->request('POST',$this->generateUrl('api_auth_tokens'),[
+            $client->request('POST', $this->generateUrl('api_auth_tokens'), [
                 'username' => $user->getUsername(),
                 'password' => $password,
             ]);
-            $data = json_decode($client->getResponse()->getBody(),true);
+            $data = json_decode($client->getResponse()->getBody(), true);
             $client = static::createClient();
-            $client->setServerParameter('HTTP_Authorization',sprintf('Bearer %s',$data['token']));
+            $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
             static::$authenticatedClients[$id] = $client;
         }
 
@@ -91,18 +91,18 @@ class DemoTestCase extends WebTestCase
 
     protected function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        return $this->getService('router')->generate($route,$parameters,$referenceType);
+        return $this->getService('router')->generate($route, $parameters, $referenceType);
     }
 
     public function __call($name, $arguments)
     {
-        if(is_null($this->helper)){
+        if (is_null($this->helper)) {
             $this->helper = $this->getService('demo.test.user_helper');
         }
         $helper = $this->helper;
-        $methodName = str_replace('helperUser','',$name);
-        if(method_exists($helper,$methodName)){
-            return call_user_func_array(array($helper,$methodName),$arguments);
+        $methodName = str_replace('helperUser', '', $name);
+        if (method_exists($helper, $methodName)) {
+            return call_user_func_array(array($helper, $methodName), $arguments);
         }
         throw new \Exception('Method not found');
     }
