@@ -101,7 +101,8 @@
     "testEnvironment": "node",
     "coverageReporters": [
       "lcov",
-      "text"
+      "text",
+      "clover"
     ]
   },
   "babel": {
