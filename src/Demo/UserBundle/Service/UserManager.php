@@ -35,7 +35,8 @@ class UserManager extends BaseUserManager
         $fields = $this->objectManager->getClassMetadata(User::class)->getFieldNames();
         foreach($fields as $field){
             if(isset($sorting[$field])){
-                $direction = ($sorting[$field] == 'asc') ? 'asc':'desc';
+                $direction = strtolower($sorting[$field]);
+                $direction = ($direction == 'asc') ? 'asc':'desc';
                 $qb->addOrderBy('U.'.$field,$direction);
             }
         }

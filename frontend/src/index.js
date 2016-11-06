@@ -11,6 +11,9 @@ import * as authActions from './components/auth/actions';
 const history = syncHistoryWithStore(hashHistory,store);
 
 const token = localStorage.getItem(authActions.AUTH_TOKEN_STORAGE_KEY);
+
+global.config = require('./config');
+
 if(token){
     store.dispatch(authActions.setAuthToken(token));
 }

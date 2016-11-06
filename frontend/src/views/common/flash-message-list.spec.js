@@ -22,10 +22,5 @@ describe('<FlashMessageList/>', () => {
         const wrapper = getComponent(state);
         const elements = wrapper.find('FlashMessage');
         expect(elements.length).toBe(2);
-
-    });
-
-    it('should handle click on remove flash button', () => {
-
     });
 });

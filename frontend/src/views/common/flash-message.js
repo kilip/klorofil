@@ -6,11 +6,6 @@ import React, {
 import classNames from 'classnames';
 
 class FlashMessage extends Component {
-    constructor(props) {
-        super(props);
-        this.onClick = this.onClick.bind(this);
-    }
-
     onClick() {
         this.props.removeFlashMessage(this.props.message.id);
     }
@@ -22,7 +17,7 @@ class FlashMessage extends Component {
                 'alert-success': type === 'success',
                 'alert-danger': type === 'error'
             })}>
-                <button id={id} onClick={this.onClick} className="close"><span>&times;</span></button>
+                <button id={'btnFlashRemove-'+id} onClick={this.onClick.bind(this)} className="close"><span>&times;</span></button>
                 {text}
             </div>
         );

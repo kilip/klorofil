@@ -8,6 +8,12 @@ import { searchUsers } from '../../components/users/actions';
 import PagerView from '../common/pager';
 
 class ListUser extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            limit: 5
+        };
+    }
     componentDidMount(){
         if(!this.props.pager.loaded){
             this.refreshData();
@@ -16,7 +22,13 @@ class ListUser extends Component {
 
     refreshData(){
         const { pager } = this.props;
-        var url = '/api/users';
+        const { limit } = this.state;
+
+        pager.apiUrl = '/api/users';
+        pager.limit = limit;
+
+        var url = pager.fetchDataUrl();
+
         if(pager.links.self){
             url = pager.links.self;
         }
@@ -73,6 +85,7 @@ class ListUser extends Component {
                             <th>#</th>
                             <th>Fullname</th>
                             <th>Username</th>
+                            <th>Email</th>
                         </tr>
                     </thead>
                     {/* this.props.pager.getItems() && Object.keys(this.props.pager.getItems()).map(this.renderUser.bind(this))*/}
