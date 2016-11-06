@@ -20,7 +20,7 @@ export const isAuthenticated = UserAuthWrapper({
 
 export const isNotAuthenticated = UserAuthWrapper({
     authSelector: (state) => state.me,
-    predicate: me => !me.authenticated,
+    predicate: me => me.isTokenExpired(),
     redirectAction: routerActions.push,
     failureRedirectPath: '/',
     wrapperDisplayName: 'UserIsNotAuthenticated'
