@@ -5,7 +5,7 @@ import React, {
 import { connect } from 'react-redux';
 import Box from '../common/box';
 import { searchUsers } from '../../components/users/actions';
-import PagerView from '../common/pager';
+import PagerView from '../common/pager-toolbar';
 
 class ListUser extends Component {
     constructor(props){
