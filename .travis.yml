@@ -38,6 +38,6 @@ script:
     - npm test -- --coverage
     - cd $TRAVIS_BUILD_DIR
 
-after_success:
-    - ./vendor/bin/test-reporter
-    - bash <(curl -s https://codecov.io/bash)
+#after_success:
+#    - ./vendor/bin/test-reporter
+#    - bash <(curl -s https://codecov.io/bash)
