@@ -81,7 +81,7 @@ class DemoTestCase extends WebTestCase
                 'password' => $password,
             ]);
             $data = json_decode($client->getResponse()->getBody(), true);
-            print_r(data);
+            print_r($data);
             $client = static::createClient();
             $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
             static::$authenticatedClients[$id] = $client;
