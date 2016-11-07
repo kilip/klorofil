@@ -31,7 +31,7 @@ class ResponseAsserter extends \PHPUnit_Framework_Assert
      * @param array $expectedProperties
      * @throws \Exception
      */
-    static public function assertResponsePropertiesExist(ResponseInterface $response, array $expectedProperties)
+    public static function assertResponsePropertiesExist(ResponseInterface $response, array $expectedProperties)
     {
         foreach ($expectedProperties as $propertyPath) {
             // this will blow up if the property doesn't exist
@@ -46,7 +46,7 @@ class ResponseAsserter extends \PHPUnit_Framework_Assert
      * @param string $propertyPath e.g. firstName, battles[0].programmer.username
      * @throws \Exception
      */
-    static public function assertResponsePropertyExists(ResponseInterface $response, $propertyPath)
+    public static function assertResponsePropertyExists(ResponseInterface $response, $propertyPath)
     {
         // this will blow up if the property doesn't exist
         static::readResponseProperty($response, $propertyPath);
@@ -58,7 +58,7 @@ class ResponseAsserter extends \PHPUnit_Framework_Assert
      * @param string $propertyPath e.g. firstName, battles[0].programmer.username
      * @throws \Exception
      */
-    static public function assertResponsePropertyDoesNotExist(ResponseInterface $response, $propertyPath)
+    public static function assertResponsePropertyDoesNotExist(ResponseInterface $response, $propertyPath)
     {
         try {
             // this will blow up if the property doesn't exist
@@ -77,7 +77,7 @@ class ResponseAsserter extends \PHPUnit_Framework_Assert
      * @param mixed $expectedValue
      * @throws \Exception
      */
-    static public function assertResponsePropertyEquals(ResponseInterface $response, $propertyPath, $expectedValue)
+    public static function assertResponsePropertyEquals(ResponseInterface $response, $propertyPath, $expectedValue)
     {
         $actual = static::readResponseProperty($response, $propertyPath);
         static::assertEquals(
@@ -98,7 +98,7 @@ class ResponseAsserter extends \PHPUnit_Framework_Assert
      * @param string $propertyPath e.g. firstName, battles[0].programmer.username
      * @throws \Exception
      */
-    static public function assertResponsePropertyIsArray(ResponseInterface $response, $propertyPath)
+    public static function assertResponsePropertyIsArray(ResponseInterface $response, $propertyPath)
     {
         static::assertInternalType('array', static::readResponseProperty($response, $propertyPath));
     }
@@ -110,7 +110,7 @@ class ResponseAsserter extends \PHPUnit_Framework_Assert
      * @param integer $expectedCount
      * @throws \Exception
      */
-    static public function assertResponsePropertyCount(ResponseInterface $response, $propertyPath, $expectedCount)
+    public static function assertResponsePropertyCount(ResponseInterface $response, $propertyPath, $expectedCount)
     {
         static::assertCount((int)$expectedCount, static::readResponseProperty($response, $propertyPath));
     }
@@ -124,7 +124,7 @@ class ResponseAsserter extends \PHPUnit_Framework_Assert
      * @param mixed $expectedValue
      * @throws \Exception
      */
-    static public function assertResponsePropertyContains(ResponseInterface $response, $propertyPath, $expectedValue)
+    public static function assertResponsePropertyContains(ResponseInterface $response, $propertyPath, $expectedValue)
     {
         $actualPropertyValue = static::readResponseProperty($response, $propertyPath);
         static::assertContains(
@@ -148,7 +148,7 @@ class ResponseAsserter extends \PHPUnit_Framework_Assert
      * @return mixed
      * @throws \Exception
      */
-    static public function readResponseProperty(ResponseInterface $response, $propertyPath)
+    public static function readResponseProperty(ResponseInterface $response, $propertyPath)
     {
         if (static::$accessor === null) {
             static::$accessor = PropertyAccess::createPropertyAccessor();
