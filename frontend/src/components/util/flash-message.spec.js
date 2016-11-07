@@ -26,7 +26,7 @@ describe('Flash Messages', () => {
         });
 
         it('should create an action to remove a flash message', () => {
-            const id = 'someid'
+            const id = 'someid';
             expectedAction = {
                 type: types.REMOVE,
                 payload: {
