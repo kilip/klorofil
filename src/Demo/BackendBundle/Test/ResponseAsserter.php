@@ -150,8 +150,8 @@ class ResponseAsserter extends \PHPUnit_Framework_Assert
      */
     public static function readResponseProperty(ResponseInterface $response, $propertyPath)
     {
-        if (static::$accessor === null) {
-            static::$accessor = PropertyAccess::createPropertyAccessor();
+        if (self::$accessor === null) {
+            self::$accessor = PropertyAccess::createPropertyAccessor();
         }
         $data = json_decode((string)$response->getBody());
         if ($data === null) {
@@ -161,7 +161,7 @@ class ResponseAsserter extends \PHPUnit_Framework_Assert
             ));
         }
         try {
-            return static::$accessor->getValue($data, $propertyPath);
+            return self::$accessor->getValue($data, $propertyPath);
         } catch (AccessException $e) {
             // it could be a stdClass or an array of stdClass
             $values = is_array($data) ? $data : get_object_vars($data);
