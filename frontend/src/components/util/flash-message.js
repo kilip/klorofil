@@ -1,8 +1,8 @@
 import shortid from 'shortid';
 import findIndex from 'lodash/findIndex';
 
-const ADD       = 'flash.add';
-const REMOVE    = 'flash.remove';
+export const ADD       = 'flash.add';
+export const REMOVE    = 'flash.remove';
 
 export function addFlashMessage(type,message){
     return {
@@ -42,8 +42,9 @@ export default (state = [], action = {}) => {
                     ...state.slice(0, index),
                     ...state.slice(index + 1)
                 ];
+            }else{
+                return state;
             }
-            return state;
         }
         default: {
             return state;
