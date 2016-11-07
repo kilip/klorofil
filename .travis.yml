@@ -27,17 +27,11 @@ before_install:
 
 install:
     - composer install --dev --no-interaction
-    - composer require --dev codeclimate/php-test-reporter dev-master
     - mkdir -p build/logs
     - bin/console doctrine:database:create -n --env=test
     - bin/console doctrine:schema:update --force -n --env=test
 
 script:
-    - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text
+    - ./vendor/bin/phpunit
     - cd frontend
-    - npm test -- --coverage
-    - cd $TRAVIS_BUILD_DIR
-
-#after_success:
-#    - ./vendor/bin/test-reporter
-#    - bash <(curl -s https://codecov.io/bash)
+    - npm test
