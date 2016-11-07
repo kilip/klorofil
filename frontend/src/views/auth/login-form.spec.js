@@ -1,39 +1,24 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { mount, shallow } from 'enzyme';
-import LoginForm, { LoginFormClass } from './LoginForm';
-import { reducer as formReducer } from 'redux-form';
-import { createStore, combineReducers } from 'redux';
-import configureMockStore from 'redux-mock-store';
+import { shallow } from 'enzyme';
+import { LoginFormComponent } from './LoginForm';
 
-import { expect } from 'chai';
+import chai,{ expect } from 'chai';
+import chaiEnzyme from 'chai-enzyme';
 import sinon from 'sinon';
 
-function getComponent(props, state){
-    const store = createStore(combineReducers({form: formReducer }));
-    return mount(
-        <Provider store={store}>
-            <LoginForm {...props}/>
-        </Provider>
-    );
-}
+chai.use(chaiEnzyme());
 
-describe('<LoginForm/>', () => {
-
-    let state;
-    let props;
+describe('<LoginFormComponent/>', () => {
     let login;
     let handleSubmit, error, touched;
 
     beforeEach( () => {
-
         login = sinon.stub().returns(Promise.resolve());
         handleSubmit = fn => fn;
-        state = {
-            ...defaultState
-        };
+    });
 
-        props = {
+    const buildSubject = () => {
+        const props = {
             login,
             handleSubmit,
             submitting: false,
@@ -50,10 +35,10 @@ describe('<LoginForm/>', () => {
                 }
             }
         };
-    });
-
+        return shallow(<LoginFormComponent {...props}/>);
+    };
     it('should handle submit', () => {
-        const wrapper = shallow(<LoginForm handleSubmit={handleSubmit} login={login}/>);
+        const wrapper = buildSubject();
         const form = wrapper.find('form');
         const username = wrapper.find('input#username');
         const password = wrapper.find('input#password');

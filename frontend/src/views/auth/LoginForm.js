@@ -5,8 +5,12 @@ import React, {
 
 import { Field } from 'redux-form';
 import TextFieldGroup from '../common/TextFieldGroup';
+import { login } from '../../components/auth/actions';
+import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 
-class LoginForm extends Component {
+
+export class LoginFormComponent extends Component {
     onSubmit(values){
         this.props.login(values);
     }
@@ -34,9 +38,15 @@ class LoginForm extends Component {
     }
 }
 
-LoginForm.propTypes = {
+LoginFormComponent.propTypes = {
     login: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired
 };
+const LoginForm = reduxForm({
+    form: 'login'
+})(LoginFormComponent);
 
-export default LoginForm;
+export default connect(
+    null,
+    {login}
+)(LoginForm);
