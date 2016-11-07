@@ -7,7 +7,7 @@ import Box from '../common/box';
 import { searchUsers } from '../../components/users/actions';
 import PagerView from '../common/pager-toolbar';
 
-class ListUser extends Component {
+export class ListUser extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -58,7 +58,8 @@ class ListUser extends Component {
         if(pager.haveToPaginate()){
             pageToolbar = (
                 <PagerView
-                    pager={this.props.pager}
+                    id="pagerUserLists"
+                    pager={pager}
                     loadData={searchUsers}
                 />
             );
@@ -107,12 +108,10 @@ ListUser.propTypes = {
     loading: PropTypes.bool.isRequired
 };
 
-ListUser = connect(
+export default connect(
     (state) => ({
         pager: state.users.pager,
         data: state.users.pager.data,
         loading: state.users.pager.loading
-    }),
-    {searchUsers}
+    }),{searchUsers}
 )(ListUser);
-export default ListUser;
