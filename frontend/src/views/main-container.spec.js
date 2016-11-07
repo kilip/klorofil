@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import MainContainer,{ LAYOUT_LOGIN} from './MainContainer';
-import { NavMain } from './NavMain';
+import MainContainer,{ LAYOUT_LOGIN} from './main-container';
+import { NavMain } from './nav-main';
 import FlashMessageList from './common/flash-message-list';
-import Sidebar from './Sidebar';
+import Sidebar from './sidebar';
 
 function removeFlashMessage(){}
 

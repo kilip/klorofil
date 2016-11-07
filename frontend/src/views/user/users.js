@@ -2,7 +2,7 @@ import React, {
     Component
 } from 'react';
 
-import MainContainer from '../MainContainer';
+import MainContainer from '../main-container';
 
 class Users extends Component {
     render() {

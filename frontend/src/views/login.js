@@ -2,8 +2,8 @@ import React, {
     Component
 } from 'react';
 
-import MainContainer,{LAYOUT_LOGIN} from './MainContainer';
-import LoginForm from './auth/LoginForm';
+import MainContainer,{LAYOUT_LOGIN} from './main-container';
+import LoginForm from './auth/login-form';
 import FlashMessageList from './common/flash-message-list';
 
 

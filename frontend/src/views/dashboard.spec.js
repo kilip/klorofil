@@ -1,5 +1,5 @@
 import React from 'react';
-import Dashboard from './Dashboard';
+import Dashboard from './dashboard';
 import { shallow } from 'enzyme';
 
 describe("Dashboard",() => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Unauthorized from './Unauthorized';
+import Unauthorized from './unauthorized';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 

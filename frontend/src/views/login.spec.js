@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Login from './Login';
+import Login from './login';
 import { Provider } from 'react-redux';
 
 function getComponent(props ={},state = {}, context = {}){

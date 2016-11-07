@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { LoginFormComponent } from './LoginForm';
+import { LoginFormComponent } from './login-form';
 
 import chai,{ expect } from 'chai';
 import chaiEnzyme from 'chai-enzyme';

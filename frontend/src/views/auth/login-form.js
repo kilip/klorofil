@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 
 import { Field } from 'redux-form';
-import TextFieldGroup from '../common/TextFieldGroup';
+import TextFieldGroup from '../common/text-field-group';
 import { login } from '../../components/auth/actions';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';

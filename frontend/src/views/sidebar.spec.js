@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { mount } from 'enzyme';
-import { Sidebar } from './Sidebar';
+import { Sidebar } from './sidebar';
 
 function getComponent(initialState={}) {
     return mount(<Sidebar store={mockStore(initialState)}/>);
