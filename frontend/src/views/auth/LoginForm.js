@@ -2,9 +2,8 @@ import React, {
     Component,
     PropTypes
 } from 'react';
-import { connect } from 'react-redux';
-import { login,tokenExpired } from '../../components/auth/actions';
-import { Field, reduxForm } from 'redux-form';
+
+import { Field } from 'redux-form';
 import TextFieldGroup from '../common/TextFieldGroup';
 
 class LoginForm extends Component {
@@ -14,10 +13,10 @@ class LoginForm extends Component {
 
     render() {
         const { handleSubmit,submitting,pristine} = this.props;
-        const { error } = this.props.me;
+        //const { error } = this.props.me;
         return (
             <form id="login-form" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                { error && <div className="alert alert-danger">{error}</div> }
+                {/* error && <div className="alert alert-danger">{error}</div> */}
                 <Field
                     name="username"
                     label="Username"
@@ -37,21 +36,7 @@ class LoginForm extends Component {
 
 LoginForm.propTypes = {
     login: PropTypes.func.isRequired,
-    me: PropTypes.object.isRequired
+    handleSubmit: PropTypes.func.isRequired
 };
-
-LoginForm.contextTypes = {
-    router: PropTypes.object
-};
-
-LoginForm.defaultProps = {};
-
-LoginForm = reduxForm({
-    form: 'login'
-})(LoginForm);
-
-LoginForm =  connect(state=>({
-    me: state.me
-}),{login,tokenExpired})(LoginForm);
 
 export default LoginForm;

@@ -10,3 +10,10 @@ import { Route, Router, Provider } from 'react-router';
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
 global.mockStore = configureMockStore([epicMiddleware]);
+
+global.defaultState = {
+    flash: [],
+    me: {
+
+    }
+};

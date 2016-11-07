@@ -55,6 +55,8 @@
   "dependencies": {
     "admin-lte": "^2.3.7",
     "bootstrap": "^3.3.7",
+    "chai": "^3.5.0",
+    "chai-enzyme": "^0.6.0",
     "classnames": "^2.2.5",
     "font-awesome": "^4.7.0",
     "jwt-decode": "^2.1.0",
@@ -71,7 +73,8 @@
     "redux-form": "^6.1.1",
     "redux-observable": "^0.12.1",
     "rxjs": "^5.0.0-rc.1",
-    "shortid": "^2.2.6"
+    "shortid": "^2.2.6",
+    "sinon": "^1.17.6"
   },
   "scripts": {
     "start": "node scripts/start.js",

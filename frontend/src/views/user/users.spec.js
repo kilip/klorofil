@@ -9,11 +9,13 @@ const state = {
         isGranted: function(){return true;}
     }
 };
+
 const component = (
     <Provider store={mockStore(state)}>
         <Users/>
     </Provider>
-); 
+);
+
 describe('<Users/>', () => {
 
     it('should rendered properly', () =>  {
