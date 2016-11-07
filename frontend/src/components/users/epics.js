@@ -6,19 +6,12 @@ import { checkAjaxUnauthorized } from '../auth/actions';
 function getSearchUserSetting(action,store){
     var data = action.payload;
     var token = store.getState().me.token;
-    return {
-        method: 'GET',
-        url: data.url,
-        headers: {
-            'Authorization': 'Bearer '+token
-        },
-        responseType: 'json'
-    };
+    return {'Authorization': 'Bearer '+token}
 }
 export function searchUserEpic(action$, store){
     return action$.ofType(SEARCH_START)
-        .mergeMap(action =>
-            ajax(getSearchUserSetting(action,store))
+        .switchMap(action =>
+            ajax.getJSON(action.payload.url,getSearchUserSetting(action,store))
                 .map(
                     payload => ({
                         type: SEARCH_RESULT,
@@ -28,7 +21,7 @@ export function searchUserEpic(action$, store){
                 )
                 .takeUntil(action$.ofType(SEARCH_CANCEL))
                 .catch(
-                    payload =>[searchError]
+                    payload =>[searchError(payload)]
                 )
         )
     ;

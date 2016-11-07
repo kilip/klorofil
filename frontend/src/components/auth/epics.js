@@ -3,7 +3,6 @@ import { LOGIN_START, LOGIN_CANCEL, LOGIN_ERROR, LOGIN_RESULT } from './actions'
 
 export function authEpic(action$){
     return action$.ofType(LOGIN_START)
-        .debounceTime(500)
         .switchMap(action =>
             ajax.post(process.env.REACT_APP_API_URI+'/api/token',action.payload.credentials,{'Cache-Control': 'no-cache'})
                 .map(
