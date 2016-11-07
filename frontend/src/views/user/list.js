@@ -32,6 +32,7 @@ class ListUser extends Component {
         if(pager.links.self){
             url = pager.links.self;
         }
+
         this.props.searchUsers({
             url: url
         });
@@ -40,7 +41,7 @@ class ListUser extends Component {
     renderUser(index){
         const user = this.props.data[index];
         return (
-            <tr key={index}>
+            <tr key={user.key}>
                 <td><img width="60px" className="img img-responsive" src={user.avatar} alt="user" role="presentation"/></td>
                 <td>{user.fullname}</td>
                 <td>{user.username}</td>
@@ -68,7 +69,7 @@ class ListUser extends Component {
                     <i className="fa fa-plus"/>
                     New
                 </button>
-                <button className="btn btn-success" onClick={this.refreshData.bind(this)}>Refresh</button>
+                <button id="btnRefreshUser" type="button" className="btn btn-success" onClick={this.refreshData.bind(this)}>Refresh</button>
                 {pageToolbar}
             </div>
         );
@@ -100,18 +101,18 @@ class ListUser extends Component {
 
 ListUser.propTypes = {
     //users: PropTypes.array.isRequired,
-    //pager: PropTypes.object.isRequired,
-    searchUsers: PropTypes.func.isRequired
+    pager: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
+    searchUsers: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired
 };
-ListUser.defaultProps = {
 
-};
-
-export default connect(
-    state => ({
+ListUser = connect(
+    (state) => ({
         pager: state.users.pager,
         data: state.users.pager.data,
         loading: state.users.pager.loading
     }),
-    { searchUsers }
+    {searchUsers}
 )(ListUser);
+export default ListUser;

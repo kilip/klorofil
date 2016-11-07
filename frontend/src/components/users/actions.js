@@ -21,12 +21,19 @@ export function userReducer(state=initialState,action){
             };
         case SEARCH_RESULT:
             const response = action.payload.response;
+
             pager.fromResponse(response);
             pager.loading = false;
             pager.loaded = true;
             return {
                 ...state,
                 pager
+            };
+        case SEARCH_ERROR:
+            return {
+                ...state,
+                error: true,
+                payload: action.payload
             };
         case LOGOUT:
             return { pager: new Pager()};
