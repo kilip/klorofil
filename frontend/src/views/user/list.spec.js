@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import ListUser,{ ListUser as ListUserClass } from './list';
 import Pager from '../../components/util/pager';
 function getComponent(props={}){
