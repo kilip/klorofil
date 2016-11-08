@@ -1,27 +1,24 @@
-import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { SEARCH_START, SEARCH_RESULT, SEARCH_CANCEL, searchError} from './actions';
-import { checkAjaxUnauthorized } from '../auth/actions';
 
-function getSearchUserSetting(action,store){
-    var data = action.payload;
+function getSearchUserSetting(store){
     var token = store.getState().me.token;
     return {'Authorization': 'Bearer '+token}
 }
 export function searchUserEpic(action$, store){
     return action$.ofType(SEARCH_START)
         .switchMap(action =>
-            ajax.getJSON(action.payload.url,getSearchUserSetting(action,store))
+            ajax({url: action.payload.url, headers: getSearchUserSetting(store)})
                 .map(
-                    payload => ({
+                    (payload) => ({
                         type: SEARCH_RESULT,
-                        response: payload.response,
+                        response: payload.xhr.response,
                         payload
                     })
                 )
                 .takeUntil(action$.ofType(SEARCH_CANCEL))
                 .catch(
-                    payload =>[searchError(payload)]
+                    (payload) =>[searchError(payload)]
                 )
         )
     ;

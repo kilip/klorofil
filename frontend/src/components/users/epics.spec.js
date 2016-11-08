@@ -71,7 +71,6 @@ describe('User Epics', () => {
             expect(request.url).toBe('/api/users');
             actions = store.getActions();
             expect(actions[0].type).toEqual(types.SEARCH_START);
-            //expect(actions[1]).toEqual(types.SEARCH_START);
         });
     });
 
