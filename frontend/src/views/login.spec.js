@@ -5,8 +5,8 @@ import { Provider } from 'react-redux';
 
 function getComponent(props ={},state = {}, context = {}){
     return mount(
-        <Provider {...props} store={mockStore(state)}>
-            <Login/>
+        <Provider store={mockStore(state)}>
+            <Login {...props} />
         </Provider>, {context}
     );
 }
@@ -32,13 +32,5 @@ describe('<Login/>', () => {
     it('should rendered properly', () => {
         const wrapper = getComponent(props,state);
         expect(wrapper.text()).toContain('Hello');
-    });
-
-    it('should handle login properly', () => {
-        const wrapper = getComponent(props,state);
-        const btnLogin = wrapper.find('#login-form');
-        expect(btnLogin.length).toBe(1);
-        btnLogin.simulate('submit');
-        expect(mockFn).toBeCalled();
     });
 });
