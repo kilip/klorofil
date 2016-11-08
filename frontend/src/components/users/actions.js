@@ -21,7 +21,7 @@ export function userReducer(state=initialState,action){
             };
         }
         case SEARCH_RESULT:{
-            const response = action.payload.response;
+            const response = action.response;
             pager.fromResponse(response);
             pager.loading = false;
             pager.loaded = true;
@@ -46,6 +46,13 @@ export function userReducer(state=initialState,action){
     }
 }
 
+export function searchResult(payload){
+    return {
+        type: SEARCH_RESULT,
+        response: payload.xhr.response,
+        payload
+    }
+}
 export function searchUsers(data){
     return {
         type: SEARCH_START,
