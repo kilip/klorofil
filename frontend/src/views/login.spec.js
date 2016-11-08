@@ -1,36 +1,34 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Login from './login';
 import { Provider } from 'react-redux';
+import Login from './login';
+import sinon from 'sinon';
 
-function getComponent(props ={},state = {}, context = {}){
+function getComponent(props ={}, state){
     return mount(
         <Provider store={mockStore(state)}>
-            <Login {...props} />
-        </Provider>, {context}
+        <Login {...props}/>
+        </Provider>
     );
 }
 
 describe('<Login/>', () => {
-    var mockFn = jest.fn();
-    var isGranted = new mockFn();
-    const isTokenExpired = jest.fn();
-    var mcLogin = new mockFn();
-    var props = {
-        login: mcLogin
-    };
 
-    const state = {
-        flash: [],
-        me: {
-            authenticated: true,
-            isGranted,
-            isTokenExpired
-        }
-    };
-
+    let doLogin, props, state;
+    beforeEach(() => {
+        props = {
+        };
+        state = {
+            flash: [],
+            me: {
+                isGranted: () => { return true;}
+            }
+        };
+    });
     it('should rendered properly', () => {
         const wrapper = getComponent(props,state);
         expect(wrapper.text()).toContain('Hello');
+
+        const form = wrapper.find('form');
     });
 });

@@ -9,17 +9,14 @@ import sinon from 'sinon';
 chai.use(chaiEnzyme());
 
 describe('<LoginFormComponent/>', () => {
-    let login;
-    let handleSubmit, error, touched;
+    let doLogin;
+    let handleSubmit, error, touched, props;
 
     beforeEach( () => {
-        login = sinon.stub().returns(Promise.resolve());
+        doLogin = sinon.stub().returns(Promise.resolve());
         handleSubmit = fn => fn;
-    });
-
-    const buildSubject = () => {
-        const props = {
-            login,
+        props = {
+            doLogin,
             handleSubmit,
             submitting: false,
             fields: {
@@ -35,14 +32,25 @@ describe('<LoginFormComponent/>', () => {
                 }
             }
         };
+    });
+
+    const buildSubject = () => {
+
         return shallow(<LoginFormComponent {...props}/>);
     };
+
     it('should handle submit', () => {
         const wrapper = buildSubject();
         const form = wrapper.find('form');
         const username = wrapper.find('input#username');
         const password = wrapper.find('input#password');
         form.simulate('submit');
-        expect(login.callCount).to.equal(1);
+        expect(doLogin.callCount).to.equal(1);
+    });
+
+    it('should render error message', () => {
+        props.authError = 'Test Error Message';
+        const subject = buildSubject();
+        expect(subject.text()).to.contains(props.authError);
     });
 });

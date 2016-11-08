@@ -1,11 +1,11 @@
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
 import { createEpicMiddleware } from 'redux-observable';
-import { authEpic }  from './epics';
+import { loginEpic }  from './epics';
 import * as types from './actions';
 import sinon from 'sinon';
 
-const epicMiddleware = createEpicMiddleware(authEpic);
+const epicMiddleware = createEpicMiddleware(loginEpic);
 const lcStore = configureMockStore(
     [epicMiddleware]
 );
@@ -13,6 +13,7 @@ const lcStore = configureMockStore(
 describe('Auth Epics', () => {
     let username, password;
     let store,xhr,requests, content, actions;
+    let latestRequest;
 
     beforeEach(() => {
         const state = {
@@ -20,39 +21,60 @@ describe('Auth Epics', () => {
                 token: 'some-token'
             }
         };
-        content = '{"page":1,"limit":5,"pages":101,"total":501,"_links":{"self":{"href":"\/api\/users?sorts%5Bfullname%5D=ASC&page=1&limit=5"},"first":{"href":"\/api\/users?sorts%5Bfullname%5D=ASC&page=1&limit=5"},"last":{"href":"\/api\/users?sorts%5Bfullname%5D=ASC&page=101&limit=5"},"next":{"href":"\/api\/users?sorts%5Bfullname%5D=ASC&page=2&limit=5"}},"_embedded":{"items":[{"username":"alexandrine.powlowski","email":"feil.laurie@ziemann.info","roles":[],"fullname":"Abbey Nader","avatar":"http:\/\/localhost:8000\/bundles\/user\/images\/female-3.png","_links":{"self":{"href":"http:\/\/localhost:8000\/api\/users\/alexandrine.powlowski"}}},{"username":"udietrich","email":"iva.franecki@hotmail.com","roles":[],"fullname":"Abby Hyatt","avatar":"http:\/\/localhost:8000\/bundles\/user\/images\/female-2.png","_links":{"self":{"href":"http:\/\/localhost:8000\/api\/users\/udietrich"}}},{"username":"langworth.destinee","email":"jstrosin@mills.com","roles":[],"fullname":"Abdul Hintz","avatar":"http:\/\/localhost:8000\/bundles\/user\/images\/male-2.png","_links":{"self":{"href":"http:\/\/localhost:8000\/api\/users\/langworth.destinee"}}},{"username":"jgrant","email":"dmoen@hansen.com","roles":[],"fullname":"Adele Franecki DDS","avatar":"http:\/\/localhost:8000\/bundles\/user\/images\/female-2.png","_links":{"self":{"href":"http:\/\/localhost:8000\/api\/users\/jgrant"}}},{"username":"ynolan","email":"lcasper@gmail.com","roles":[],"fullname":"Adolph Jacobson","avatar":"http:\/\/localhost:8000\/bundles\/user\/images\/male-1.png","_links":{"self":{"href":"http:\/\/localhost:8000\/api\/users\/ynolan"}}}]}}';
         store = lcStore(state);
         requests = [];
         xhr = sinon.useFakeXMLHttpRequest();
         xhr.onCreate = function(req){
             requests.push(req);
+            latestRequest = req;
         };
         username = "admin";
         password = "admin";
     });
 
     afterEach(() => {
-        epicMiddleware.replaceEpic(authEpic);
+        epicMiddleware.replaceEpic(loginEpic);
         xhr.restore();
     });
 
-    context('loginEpic', () => {
-        it('should handle 401 error type', () => {
-            const payload = {data: {username, password}};
-            store.dispatch({
-                type: types.LOGIN_START,
-                payload
-            });
-            requests[0].respond(
-                401,
-                {'Content-Type': 'application/json'},
-                '{"errors":{"_error":"Either your username or password is invalid."}}'
-            );
-            actions = store.getActions();
-            expect(actions[0]).toEqual(
-                {type: types.LOGIN_START, payload}
-            );
-            expect(actions[1].type).toContain(types.LOGIN_ERROR);
+    const getLatestRequest = () => {
+        return requests[requests.length-1];
+    };
+
+    it('should handle successfull login', () => {
+        const payload = {data: {username, password}};
+        store.dispatch({
+            type: types.LOGIN_START,
+            payload
         });
+        latestRequest.respond(
+            200,
+            {'Content-Type':'application/json'},
+            '{"token":"some-token"}'
+        );
+        actions = store.getActions();
+        expect(actions[0].type).toBe(types.LOGIN_START);
+        expect(actions[1].type).toBe(types.LOGIN_RESULT);
+        expect(actions[1].token).toBe('some-token');
     });
+
+    it('should handle 401 error type', () => {
+        const payload = {data: {username, password}};
+        requests = [];
+        store.dispatch({
+            type: types.LOGIN_START,
+            payload
+        });
+        latestRequest.respond(
+            401,
+            {'Content-Type': 'application/json'},
+            '{"errors":{"_error":"Either your username or password is invalid."}}'
+        );
+
+        actions = store.getActions();
+        expect(actions[0].type).toBe(types.LOGIN_START);
+        expect(actions[1].type).toBe(types.LOGIN_ERROR);
+        expect(actions[1].error).toBeDefined();
+    });
+
 });

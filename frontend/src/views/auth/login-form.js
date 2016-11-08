@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 
 export class LoginFormComponent extends Component {
     onSubmit(values){
-        this.props.login(values);
+        this.props.doLogin(values);
     }
 
     render() {
@@ -37,7 +37,7 @@ export class LoginFormComponent extends Component {
 }
 
 LoginFormComponent.propTypes = {
-    login: PropTypes.func.isRequired,
+    doLogin: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     authError: PropTypes.string
 };
@@ -48,6 +48,5 @@ const LoginForm = reduxForm({
 export default connect(
     state => ({
         authError: state.me.error
-    }),
-    {login}
+    })
 )(LoginForm);
