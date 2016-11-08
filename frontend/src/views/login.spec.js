@@ -14,7 +14,7 @@ function getComponent(props ={}, state){
 
 describe('<Login/>', () => {
 
-    let doLogin, props, state;
+    let props, state;
     beforeEach(() => {
         props = {
         };
@@ -28,7 +28,5 @@ describe('<Login/>', () => {
     it('should rendered properly', () => {
         const wrapper = getComponent(props,state);
         expect(wrapper.text()).toContain('Hello');
-
-        const form = wrapper.find('form');
     });
 });
