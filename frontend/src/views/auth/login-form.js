@@ -9,18 +9,16 @@ import { login } from '../../components/auth/actions';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
-
 export class LoginFormComponent extends Component {
     onSubmit(values){
         this.props.login(values);
     }
 
     render() {
-        const { handleSubmit,submitting,pristine} = this.props;
-        //const { error } = this.props.me;
+        const { handleSubmit, submitting, pristine, authError } = this.props;
         return (
             <form id="login-form" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                {/* error && <div className="alert alert-danger">{error}</div> */}
+                { authError && <div className="alert alert-danger">{authError}</div> }
                 <Field
                     name="username"
                     label="Username"
@@ -40,13 +38,16 @@ export class LoginFormComponent extends Component {
 
 LoginFormComponent.propTypes = {
     login: PropTypes.func.isRequired,
-    handleSubmit: PropTypes.func.isRequired
+    handleSubmit: PropTypes.func.isRequired,
+    authError: PropTypes.string
 };
 const LoginForm = reduxForm({
     form: 'login'
 })(LoginFormComponent);
 
 export default connect(
-    null,
+    state => ({
+        authError: state.me.error
+    }),
     {login}
 )(LoginForm);

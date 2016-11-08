@@ -2,9 +2,7 @@ import * as authAction from './actions';
 import AuthUser from './user';
 import config from '../../config';
 
-const initialState = new AuthUser();
-
-export default (state = initialState, action = []) => {
+export default (state = new AuthUser(), action = []) => {
     switch(action.type){
         case authAction.LOGIN_START:{
             state.authenticated = false;
@@ -20,11 +18,10 @@ export default (state = initialState, action = []) => {
             return user;
         }
         case authAction.LOGIN_ERROR: {
-            return {
-                authenticated: false,
-                user: {},
-                error: action.response.errors._error
-            };
+            state.authenticated = false;
+            state.authenticating =false;
+            state.error = action.response.errors._error;
+            return state;
         }
         case authAction.LOGOUT:{
             state.storeToken(null);

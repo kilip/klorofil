@@ -7,6 +7,7 @@ export default class AuthenticatedUser
     constructor(){
         this.authenticated = false;
         this.authenticating = false;
+        this.error = "";
     }
 
     isTokenExpired(){
