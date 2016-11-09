@@ -17,6 +17,11 @@ use Faker\Factory as Faker;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class LoadUserData
+ * @package Demo\BackendBundle\DataFixtures\ORM
+ * @codeCoverageIgnore
+ */
 class LoadUserData implements FixtureInterface, ContainerAwareInterface
 {
     /**

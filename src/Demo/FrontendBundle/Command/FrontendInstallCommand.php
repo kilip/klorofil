@@ -7,6 +7,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
+/**
+ * Class FrontendInstallCommand
+ * @package Demo\FrontendBundle\Command
+ *
+ * @codeCoverageIgnore
+ */
 class FrontendInstallCommand extends ContainerAwareCommand
 {
     /**
