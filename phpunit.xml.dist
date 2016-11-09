@@ -23,6 +23,7 @@
             <directory>src</directory>
             <exclude>
                 <directory>src/*Bundle/Resources</directory>
+                <directory>src/Demo/*Bundle/Spec</directory>
                 <directory>src/Demo/*Bundle/Test</directory>
                 <directory>src/Demo/*Bundle/Tests</directory>
                 <directory>src/*/*Bundle/Resources</directory>
