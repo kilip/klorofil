@@ -35,5 +35,6 @@ install:
 
 script:
     - ./vendor/bin/phpunit
+    - ./vendor/bin/phpspec run
     - cd frontend
     - npm test
