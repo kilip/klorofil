@@ -44,6 +44,7 @@ class RegisterControllerTest extends ApiTestCase
 
     /**
      * @covers ::createAction
+     * @covers \Demo\BackendBundle\Controller\ApiBaseController::getErrorsFromForm
      */
     public function testCreateError()
     {
