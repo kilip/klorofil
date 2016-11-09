@@ -1,0 +1,14 @@
+suites:
+    user_bundle:
+        namespace:    Demo\UserBundle
+        psr4_prefix:  Demo\UserBundle
+        spec_prefix:  Spec
+        src_path:     src/Demo/UserBundle
+        spec_path:    src/Demo/UserBundle
+
+extensions:
+    PhpSpecCodeCoverage\CodeCoverageExtension:
+        format:
+            - clover
+        output:
+            clover: build/clover-phpspec.xml

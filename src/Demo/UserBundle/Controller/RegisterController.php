@@ -2,16 +2,15 @@
 
 namespace Demo\UserBundle\Controller;
 
+use Demo\BackendBundle\Controller\ApiBaseController;
 use Demo\UserBundle\Entity\User;
 use Demo\UserBundle\Form\RegistrationType;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\Controller\FOSRestController;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-class RegisterController extends FOSRestController
+class RegisterController extends ApiBaseController
 {
     /**
      * Create a new user
@@ -49,24 +48,5 @@ class RegisterController extends FOSRestController
         $view = $this->view($user, Response::HTTP_CREATED);
         $view->getResponse()->headers->set('Location', $this->generateUrl('api_user_get', ['username' => $user->getUsername()]));
         return $view;
-    }
-
-    private function getErrorsFromForm(FormInterface $form)
-    {
-        $errors = array();
-        foreach ($form->getErrors() as $error) {
-            $errors[] = $error->getMessage();
-        }
-
-        foreach ($form->all() as $childForm) {
-            if ($childForm instanceof FormInterface) {
-                if ($childErrors = $this->getErrorsFromForm($childForm)) {
-                    if (!in_array($childForm->getName(), $errors)) {
-                        $errors[$childForm->getName()] = $childErrors;
-                    }
-                }
-            }
-        }
-        return $errors;
     }
 }

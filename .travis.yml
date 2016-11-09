@@ -5,17 +5,19 @@ env:
 php:
   - 5.6
   - 7
+  - hhvm
 git:
     depth: 1
 cache:
   directories:
-  - node_modules
-  - vendor
-  - frontend/node_modules
+    - node_modules
+    - vendor
+    - frontend/node_modules
+
 before_install:
     - stty cols 120
-    - INI_FILE=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-    - echo memory_limit = -1 >> $INI_FILE
+    - if [[ "$TRAVIS_PHP_VERSION" = "php*" ]]; then phpenv config-add .travis.ini ; fi
+    - if [[ "$TRAVIS_PHP_VERSION" = "hhv*" ]]; then cat .travis.ini >> /etc/hhvm/php.ini ; fi
     - mysql -e 'create database symfony'
     - mkdir -p ./var/jwt
     - openssl genrsa -out var/jwt/private.pem 2048
@@ -33,5 +35,6 @@ install:
 
 script:
     - ./vendor/bin/phpunit
+    - if [[ "$TRAVIS_PHP_VERSION" = "php*" ]]; then ./vendor/bin/phpspec run ; fi
     - cd frontend
     - npm test

@@ -2,19 +2,26 @@
 
 namespace Demo\UserBundle\Tests\Controller;
 
-use Demo\BackendBundle\Test\DemoTestCase;
+use Demo\BackendBundle\Test\ApiTestCase;
 use Demo\BackendBundle\Test\ResponseAsserter;
 use Symfony\Component\HttpFoundation\Response;
 
-class TokenControllerTest extends DemoTestCase
+/**
+ * Class TokenControllerTest
+ * @package Demo\UserBundle\Tests\Controller
+ * @coversDefaultClass Demo\UserBundle\Controller\TokenController
+ */
+class TokenControllerTest extends ApiTestCase
 {
+    /**
+     * @covers ::tokenAuthentication
+     */
     public function testPostCreateToken()
     {
-        $helper = $this->getService('demo.test.user_helper');
-        $helper->create('toni','toni','some@mail.com','Anthonius Munthi');
+        $this->createUser('toni','toni','some@mail.com','Anthonius Munthi');
 
-        $client = static::createClient();
-        $client->request('POST',$this->generateUrl('api_login_check'),[
+        $client = static::makeClient();
+        $client->request('POST',$this->generateUrl('api_auth_tokens'),[
             'username' => 'toni',
             'password' => 'toni',
         ]);
@@ -23,13 +30,27 @@ class TokenControllerTest extends DemoTestCase
         ResponseAsserter::assertResponsePropertyExists($response,'token');
     }
 
+    /**
+     * @covers ::tokenAuthentication
+     */
     public function testPostTokenInvalidCredential()
     {
-        $helper = $this->getService('demo.test.user_helper');
-        $helper->create('toni','toni','some@mail.com','Anthonius Munthi');
+        $this->createUser('toni','toni','some@mail.com','Anthonius Munthi');
 
-        $client = static::createClient();
-        $client->request('POST',$this->generateUrl('api_login_check'),[
+        $client = static::makeClient();
+
+        $client->request('POST',$this->generateUrl('api_auth_tokens'),[
+            'username' => 'bar',
+            'password' => 'toni',
+        ]);
+
+        // test when user not exists
+        $response = $client->getResponse();
+        $this->assertEquals(Response::HTTP_UNAUTHORIZED,$response->getStatusCode());
+
+
+        // test with invalid password
+        $client->request('POST',$this->generateUrl('api_auth_tokens'),[
             'username' => 'toni',
             'password' => 'bar',
         ]);

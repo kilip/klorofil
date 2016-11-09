@@ -21,6 +21,8 @@ doctrine:
         connections:
             default:
                 driver:   pdo_sqlite
-                #memory: true
-                path:    "%kernel.root_dir%/../var/cache/%database_name%.db3"
+                memory: true
                 charset: UTF8
+                path:     "%kernel.cache_dir%/%database_name%_test.db3"
+liip_functional_test:
+    cache_sqlite_db: true
