@@ -58,10 +58,13 @@ class User extends BaseUser
 
     /**
      * @param mixed $fullname
+     * @return $this
      */
     public function setFullname($fullname)
     {
         $this->fullname = $fullname;
+
+        return $this;
     }
 
     /**
@@ -74,9 +77,12 @@ class User extends BaseUser
 
     /**
      * @param string $avatar
+     * @return $this
      */
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+
+        return $this;
     }
 }
