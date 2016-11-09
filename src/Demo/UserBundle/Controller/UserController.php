@@ -2,13 +2,11 @@
 
 namespace Demo\UserBundle\Controller;
 
-use Demo\UserBundle\Entity\User;
+use Demo\BackendBundle\Controller\ApiBaseController;
 use Demo\UserBundle\Form\RegistrationType;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\Controller\FOSRestController;
 use Hateoas\Configuration\Route;
 use Hateoas\Representation\Factory\PagerfantaFactory;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -19,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  * @Security("is_granted('ROLE_USER')")
  * @package Demo\UserBundle\Controller
  */
-class UserController extends FOSRestController
+class UserController extends ApiBaseController
 {
     /**
      * Get all existing user
@@ -143,21 +141,5 @@ class UserController extends FOSRestController
     public function deleteAction()
     {
 
-    }
-
-    private function getErrorsFromForm(FormInterface $form)
-    {
-        $errors = array();
-        foreach ($form->getErrors() as $error) {
-            $errors[] = $error->getMessage();
-        }
-        foreach ($form->all() as $childForm) {
-            if ($childForm instanceof FormInterface) {
-                if ($childErrors = $this->getErrorsFromForm($childForm)) {
-                    $errors[$childForm->getName()] = $childErrors;
-                }
-            }
-        }
-        return $errors;
     }
 }

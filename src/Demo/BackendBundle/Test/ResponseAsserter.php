@@ -31,7 +31,7 @@ class ResponseAsserter extends \PHPUnit_Framework_Assert
      * @param array $expectedProperties
      * @throws \Exception
      */
-    public static function assertResponsePropertiesExist(ResponseInterface $response, array $expectedProperties)
+    public static function assertResponsePropertiesExist(ResponseInterface $response = null, array $expectedProperties)
     {
         foreach ($expectedProperties as $propertyPath) {
             // this will blow up if the property doesn't exist

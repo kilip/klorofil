@@ -39,7 +39,7 @@ class UserTestHelper
         return $this->manager;
     }
 
-    public function create($username, $password, $email = null, $fullname = null, $role = 'ROLE_USER')
+    public function createUser($username, $password, $email = null, $fullname = null, $role = 'ROLE_USER')
     {
         $faker = Faker::create();
         $manager = $this->manager;
@@ -70,7 +70,7 @@ class UserTestHelper
         return $user;
     }
 
-    public function delete($username)
+    public function deleteUser($username)
     {
         $manager = $this->manager;
         if (!is_null($user = $manager->findUserByUsername($username))) {
