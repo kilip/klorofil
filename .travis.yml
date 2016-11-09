@@ -5,6 +5,7 @@ env:
 php:
   - 5.6
   - 7
+  - hhvm
 git:
     depth: 1
 cache:
