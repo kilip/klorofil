@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import Dashboard from './views/Dashboard';
-import Homepage from './views/Homepage';
-import Login from './views/Login';
-import Unauthorized from './views/Unauthorized';
+import Dashboard from './views/dashboard';
+import Homepage from './views/homepage';
+import Login from './views/login';
+import Unauthorized from './views/unauthorized';
 
 import User from './views/user/users';
 import ListUser from './views/user/list';

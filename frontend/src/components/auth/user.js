@@ -2,11 +2,16 @@ import jwtDecode from 'jwt-decode';
 import * as authActions from './actions';
 import _ from 'lodash';
 
-export default class AuthenticatedUser
+export class AuthenticatedUser
 {
     constructor(){
         this.authenticated = false;
         this.authenticating = false;
+        this.error = "";
+        this.roles = [];
+        this.username = '';
+        this.fullname = '';
+        this.avatar = '';
     }
 
     isTokenExpired(){
@@ -15,13 +20,12 @@ export default class AuthenticatedUser
         }
         const iat = new Date(this.iat*1000);
         const exp = new Date(iat.getTime()+(1000*this.ttl));
-        const now  = new Date();
-
+        const now  = Date.now();
         return now >= exp;
     }
 
     isGranted(requiredRoles){
-        if(!this.authenticated){
+        if(this.isTokenExpired()){
             return false;
         }
         if(!_.isArray(requiredRoles)){
@@ -58,3 +62,5 @@ export default class AuthenticatedUser
         }
     }
 }
+
+export default AuthenticatedUser;

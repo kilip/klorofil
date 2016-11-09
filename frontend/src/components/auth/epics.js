@@ -1,25 +1,33 @@
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { LOGIN_START, LOGIN_CANCEL, LOGIN_ERROR, LOGIN_RESULT } from './actions';
 
-export function authEpic(action$){
+export function loginEpic(action$){
+    const config = {
+        url: process.env.REACT_APP_API_URI+'/api/token',
+        headers: {'Cache-Control': 'no-cache','Content-Type': 'application/json'},
+        method: 'POST',
+        responseType: 'json'
+    };
     return action$.ofType(LOGIN_START)
-        .debounceTime(500)
         .switchMap(action =>
-            ajax.post(process.env.REACT_APP_API_URI+'/api/token',action.payload.credentials,{'Cache-Control': 'no-cache'})
+            ajax({...config, body: action.payload.credentials})
                 .map(
-                    payload => ({
+                    (payload) => ({
                         type: LOGIN_RESULT,
-                        token: payload.response.token,
+                        token: payload.xhr.response.token,
                         payload
                     })
                 )
                 .takeUntil(action$.ofType(LOGIN_CANCEL))
-                .catch(payload =>[{
-                    type: LOGIN_ERROR,
-                    error: true,
-                    payload,
-                    response: payload.xhr.response
-                }])
-        )
-    ;
+                .catch(
+                    (payload) =>([
+                        {
+                            type: LOGIN_ERROR,
+                            error: true,
+                            payload,
+                            response: payload.xhr.response
+                        }
+                    ])
+                )
+        );
 }

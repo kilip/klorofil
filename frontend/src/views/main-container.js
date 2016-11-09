@@ -2,8 +2,8 @@ import React, {
     Component,
     PropTypes
 } from 'react';
-import NavMain from './NavMain';
-import Sidebar from './Sidebar';
+import NavMain from './nav-main';
+import Sidebar from './sidebar';
 import { Link } from 'react-router';
 import { replaceCssClass } from './utils/dom';
 import { connect } from 'react-redux';

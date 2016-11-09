@@ -1,6 +1,6 @@
 import 'rxjs';
 import React from 'react';
-import Homepage from './Homepage';
+import Homepage from './homepage';
 import { shallow, mount } from 'enzyme';
 
 describe('Homepage View', () => {

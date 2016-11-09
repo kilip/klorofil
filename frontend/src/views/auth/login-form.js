@@ -2,22 +2,22 @@ import React, {
     Component,
     PropTypes
 } from 'react';
-import { connect } from 'react-redux';
-import { login,tokenExpired } from '../../components/auth/actions';
-import { Field, reduxForm } from 'redux-form';
-import TextFieldGroup from '../common/TextFieldGroup';
 
-class LoginForm extends Component {
+import { Field } from 'redux-form';
+import TextFieldGroup from '../common/text-field-group';
+import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+
+export class LoginFormComponent extends Component {
     onSubmit(values){
-        this.props.login(values);
+        this.props.doLogin(values);
     }
 
     render() {
-        const { handleSubmit,submitting,pristine} = this.props;
-        const { error } = this.props.me;
+        const { handleSubmit, submitting, pristine, authError } = this.props;
         return (
             <form id="login-form" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                { error && <div className="alert alert-danger">{error}</div> }
+                { authError && <div className="alert alert-danger">{authError}</div> }
                 <Field
                     name="username"
                     label="Username"
@@ -35,23 +35,17 @@ class LoginForm extends Component {
     }
 }
 
-LoginForm.propTypes = {
-    login: PropTypes.func.isRequired,
-    me: PropTypes.object.isRequired
+LoginFormComponent.propTypes = {
+    doLogin: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    authError: PropTypes.string
 };
-
-LoginForm.contextTypes = {
-    router: PropTypes.object
-};
-
-LoginForm.defaultProps = {};
-
-LoginForm = reduxForm({
+const LoginForm = reduxForm({
     form: 'login'
-})(LoginForm);
+})(LoginFormComponent);
 
-LoginForm =  connect(state=>({
-    me: state.me
-}),{login,tokenExpired})(LoginForm);
-
-export default LoginForm;
+export default connect(
+    state => ({
+        authError: state.me.error
+    })
+)(LoginForm);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { NavMain } from './NavMain';
+import { NavMain } from './nav-main';
 
 const store = mockStore();
 var mockLogout = jest.fn();

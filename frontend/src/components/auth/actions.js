@@ -1,4 +1,3 @@
-import store from '../../store';
 export const AUTH_TOKEN_STORAGE_KEY = 'klorofil.auth.token';
 export const LOGIN_START        = 'auth.login.start';
 export const LOGIN_CANCEL       = 'auth.login.cancel';
@@ -22,24 +21,19 @@ export function logout(){
     }
 }
 
+export function loginError(payload){
+    return {
+        type: LOGIN_ERROR,
+        response: payload.xhr.response,
+        error: true,
+        payload
+    };
+}
+
 export function setAuthToken(token){
     return {
         type: LOGIN_RESULT,
         payload: {},
         token: token
-    }
-}
-
-export function tokenExpired(){
-    return {
-        type: LOGOUT,
-        payload: {}
-    };
-}
-
-export function checkAjaxUnauthorized(payload){
-    const auth = store.getState().me;
-    if(payload.status === 401 && auth.isTokenExpired()){
-        return tokenExpired();
     }
 }

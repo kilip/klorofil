@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import TextFieldGroup from './TextFieldGroup';
+import TextFieldGroup from './text-field-group';
 
 function getComponent(props){
     return mount(<TextFieldGroup {...props}/>);

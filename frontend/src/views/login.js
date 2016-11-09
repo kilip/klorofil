@@ -1,13 +1,16 @@
 import React, {
-    Component
+    Component,
+    PropTypes
 } from 'react';
-
-import MainContainer,{LAYOUT_LOGIN} from './MainContainer';
-import LoginForm from './auth/LoginForm';
+import { connect } from 'react-redux';
+import MainContainer,{LAYOUT_LOGIN} from './main-container';
+import LoginForm from './auth/login-form';
+import {login as doLogin} from '../components/auth/actions';
 import FlashMessageList from './common/flash-message-list';
 
-class Login extends Component {
+export class Login extends Component {
     render() {
+        const { doLogin } = this.props;
         return (
             <MainContainer layout={LAYOUT_LOGIN} title='Login'>
                 <FlashMessageList/>
@@ -16,15 +19,19 @@ class Login extends Component {
                     <p>You can use <b>admin</b> as username and password.</p>
                 </div>
                 <div className="login-box-body">
-                    <LoginForm/>
+                    <LoginForm doLogin={doLogin}/>
                 </div>
             </MainContainer>
         );
     }
 }
 
-Login.defaultProps = {
-
+Login.propTypes = {
+    doLogin: PropTypes.func.isRequired
 };
 
-export default Login;
+export default connect(
+    state => ({
+    }),
+    {doLogin}
+)(Login);

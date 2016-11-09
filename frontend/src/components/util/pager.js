@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import config from '../../config';
+import shortId from 'shortid';
 
 export default class Pager {
 
@@ -17,17 +18,22 @@ export default class Pager {
     }
 
     fromResponse(response){
-        this.data = response._embedded.items;
+        var data = response._embedded.items;
+        _.forEach(data, function(value,key){
+            data[key]['key'] = shortId.generate();
+        });
 
         var links = {};
         _.forEach(response._links,function(value,key){
             links[key] = config.apiBaseUrl + '/' + _.trim(value.href,'/');
         });
-        this.links = links;
-        this.pages = response.pages;
-        this.page = response.page;
-        this.total = response.total;
-        this.limit = response.limit;
+
+        this.data   = data;
+        this.links  = links;
+        this.pages  = response.pages;
+        this.page   = response.page;
+        this.total  = response.total;
+        this.limit  = response.limit;
     }
 
     haveToPaginate(){
