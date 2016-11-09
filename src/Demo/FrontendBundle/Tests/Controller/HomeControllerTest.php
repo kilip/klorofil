@@ -16,6 +16,12 @@ namespace Demo\FrontendBundle\Tests\Controller;
 use Demo\BackendBundle\Test\DemoTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class HomeControllerTest
+ * @package Demo\FrontendBundle\Tests\Controller
+ *
+ * @coversDefaultClass Demo\FrontendBundle\Controller\HomeController
+ */
 class HomeControllerTest extends DemoTestCase
 {
     public function testHome()
