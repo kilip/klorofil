@@ -9,7 +9,7 @@ import { LOGOUT } from '../auth/actions';
 const initialState = {
     pager: new Pager()
 };
-export function userReducer(state=initialState,action){
+export function userReducer(state=initialState,action = {}){
     const pager = state.pager;
     switch(action.type){
         case SEARCH_START:{

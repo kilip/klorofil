@@ -2,7 +2,7 @@ import * as authAction from './actions';
 import AuthUser from './user';
 import config from '../../config';
 
-export default (state = new AuthUser(), action = []) => {
+export default (state = new AuthUser(), action = {}) => {
     switch(action.type){
         case authAction.LOGIN_START:{
             state.authenticated = false;

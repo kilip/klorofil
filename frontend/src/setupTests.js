@@ -17,3 +17,30 @@ global.defaultState = {
 
     }
 };
+
+
+class LocalStorageMock
+{
+    constructor(){
+        this.store = {};
+    }
+
+    getItem(key) {
+        return this.store[key];
+    }
+
+    setItem(key,value){
+        this.store[key] = value.toString();
+    }
+
+    removeItem(key){
+        delete this.store[key];
+    }
+
+    clear() {
+        this.store = {};
+    }
+}
+
+const localStorageMock = new LocalStorageMock();
+Object.defineProperty(window,'localStorage',{value: localStorageMock});

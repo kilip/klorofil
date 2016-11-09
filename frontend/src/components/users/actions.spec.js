@@ -36,7 +36,7 @@ describe('User Actions/Reducers', () => {
             state = { pager: new Pager()};
         });
         it('should handle return the initial state properly', () => {
-            state = userReducer(state, {});
+            state = userReducer();
             expect(state.pager.loading).toBe(false);
             expect(state.pager.loaded).toBe(false);
             expect(state.pager.data).toEqual([]);
@@ -44,7 +44,7 @@ describe('User Actions/Reducers', () => {
 
         it('should handle SEARCH_START action', () => {
             const data = {url: 'someurl'};
-            action = searchUsers(data)
+            action = searchUsers(data);
             state = userReducer(state,action);
 
             expect(state.pager.loading).toBeTruthy();
