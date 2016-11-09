@@ -4,7 +4,9 @@
   "description": "Anthonius Munthi Demo Frontend",
   "main": "index.js",
   "scripts": {
-    "start": "nf start -j ForemanProcfile -p 3000"
+    "start": "nf start -j ForemanProcfile -p 3000",
+    "test": "cd frontend && npm test",
+    "coverage": "cd frontend && CI=true npm test -- --coverage"
   },
   "repository": {
     "type": "git",
