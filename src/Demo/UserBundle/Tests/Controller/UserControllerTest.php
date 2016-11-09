@@ -53,7 +53,6 @@ class UserControllerTest extends ApiTestCase
         $this->createUser('test_update','foo');
         $data = [
             'fullname' => 'Test Update User',
-            'email' => 'test@update.com'
         ];
         $json = json_encode($data);
         $client = $this->createAuthenticatedClient();
