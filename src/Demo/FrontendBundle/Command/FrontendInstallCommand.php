@@ -47,6 +47,8 @@ class FrontendInstallCommand extends ContainerAwareCommand
     {
         $output->writeln('Processing frontend script: <info>'.$script.'</info>');
         $process = new Process($script);
+        $process->setTimeout(180);
+        $process->setIdleTimeout(180);
         $process->run(function($type, $buffer) use ($output){
             if (Process::OUT === $type) {
                 $output->write('<info>'.$buffer.'</info>');
