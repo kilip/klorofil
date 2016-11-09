@@ -35,6 +35,6 @@ install:
 
 script:
     - ./vendor/bin/phpunit
-    - ./vendor/bin/phpspec run
+    - if [[ "$TRAVIS_PHP_VERSION" = "php*" ]]; then ./vendor/bin/phpspec run ; fi
     - cd frontend
     - npm test
