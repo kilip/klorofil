@@ -38,7 +38,7 @@ class UserManager extends BaseUserManager
                 $qb->addOrderBy('U.'.$field, $direction);
             }
         }
-        $adapter = new DoctrineORMAdapter($qb, 'U.id');
+        $adapter = new DoctrineORMAdapter($qb);
         $pager = new Pagerfanta($adapter);
         return $pager;
     }
