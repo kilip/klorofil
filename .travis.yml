@@ -34,7 +34,8 @@ install:
     - bin/console doctrine:schema:update --force -n --env=test
 
 script:
-    - ./vendor/bin/phpunit --coverage-text --coverage-clover=build/clover-phpunit.xml
+    - echo $TRAVIS_PHP_VERSION
+    - ./vendor/bin/phpunit --coverage-text --coverage-clover=./build/clover-phpunit.xml
     - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]]; then ./vendor/bin/phpspec run ; fi
     - cd frontend
     - npm test -- --coverage
