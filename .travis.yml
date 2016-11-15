@@ -41,6 +41,6 @@ script:
 
 after_script:
     - wget https://scrutinizer-ci.com/ocular.phar
-    - if [[ "$TRAVIS_PHP_VERSION" = "7.0" ]]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover-phpunit.xml ; fi
-    - if [[ "$TRAVIS_PHP_VERSION" = "7.0" ]]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover-phpspec.xml ; fi
-    - if [[ "$TRAVIS_PHP_VERSION" = "7.0" ]]; then php ocular.phar code-coverage:upload --format=clover ./frontend/coverage/clover.xml ; fi
+    - if [[ "$TRAVIS_PHP_VERSION" = "7" ]]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover-phpunit.xml ; fi
+    - if [[ "$TRAVIS_PHP_VERSION" = "7" ]]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover-phpspec.xml ; fi
+    - if [[ "$TRAVIS_PHP_VERSION" = "7" ]]; then php ocular.phar code-coverage:upload --format=clover ./frontend/coverage/clover.xml ; fi
