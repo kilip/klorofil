@@ -9,13 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class TokenControllerTest
  * @package Demo\UserBundle\Tests\Controller
- * @coversDefaultClass Demo\UserBundle\Controller\TokenController
  */
 class TokenControllerTest extends ApiTestCase
 {
-    /**
-     * @covers ::tokenAuthentication
-     */
     public function testPostCreateToken()
     {
         $this->createUser('toni','toni','some@mail.com','Anthonius Munthi');
@@ -30,9 +26,6 @@ class TokenControllerTest extends ApiTestCase
         ResponseAsserter::assertResponsePropertyExists($response,'token');
     }
 
-    /**
-     * @covers ::tokenAuthentication
-     */
     public function testPostTokenInvalidCredential()
     {
         $this->createUser('toni','toni','some@mail.com','Anthonius Munthi');

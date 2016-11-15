@@ -19,8 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class HomeControllerTest
  * @package Demo\FrontendBundle\Tests\Controller
- *
- * @coversDefaultClass Demo\FrontendBundle\Controller\HomeController
  */
 class HomeControllerTest extends DemoTestCase
 {

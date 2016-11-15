@@ -11,13 +11,9 @@ use Demo\UserBundle\Controller\UserController;
  * Class UserControllerTest
  * @package Demo\UserBundle\Tests\Controller
  *
- * @coversDefaultClass Demo\UserBundle\Controller\UserController
  */
 class UserControllerTest extends ApiTestCase
 {
-    /**
-     * @covers ::listAction
-     */
     public function testList()
     {
         $client = $this->createAuthenticatedClient();
@@ -27,9 +23,6 @@ class UserControllerTest extends ApiTestCase
         ResponseAsserter::assertResponsePropertiesExist($response,['page']);
     }
 
-    /**
-     * @covers ::getAction
-     */
     public function testGet()
     {
         $this->createUser('toni','foo');
@@ -45,9 +38,6 @@ class UserControllerTest extends ApiTestCase
         ResponseAsserter::assertResponsePropertyEquals($response,'username','toni');
     }
 
-    /**
-     * @covers ::updateAction
-     */
     public function testUpdate()
     {
         $this->createUser('test_update','foo');
@@ -67,9 +57,6 @@ class UserControllerTest extends ApiTestCase
         ResponseAsserter::assertResponsePropertyEquals($response,'fullname','Test Update User');
     }
 
-    /**
-     * @covers ::deleteAction
-     */
     public function testDeleteAction()
     {
 

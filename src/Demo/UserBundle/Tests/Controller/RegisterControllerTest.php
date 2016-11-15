@@ -10,13 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
  * Class RegisterControllerTest
  *
  * @package Demo\UserBundle\Tests\Controller
- * @coversDefaultClass Demo\UserBundle\Controller\RegisterController
  */
 class RegisterControllerTest extends ApiTestCase
 {
-    /**
-     * @covers ::createAction
-     */
     public function testCreate()
     {
         $this->deleteUser('test_create');
@@ -42,10 +38,6 @@ class RegisterControllerTest extends ApiTestCase
         ResponseAsserter::assertResponsePropertiesExist($response,['username']);
     }
 
-    /**
-     * @covers ::createAction
-     * @covers \Demo\BackendBundle\Controller\ApiBaseController::getErrorsFromForm
-     */
     public function testCreateError()
     {
         $data = [

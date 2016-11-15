@@ -20,7 +20,6 @@ use Symfony\Component\Form\Test\TypeTestCase;
  *
  * @package Demo\UserBundle\Tests\Form
  *
- * @coversDefaultClass Demo\UserBundle\Form\RegistrationType
  */
 class RegistrationTypeTest extends TypeTestCase
 {
