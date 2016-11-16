@@ -32,7 +32,6 @@ install:
     - mkdir -p build/logs
     - bin/console doctrine:database:create -n --env=test
     - bin/console doctrine:schema:update --force -n --env=test
-    - ./vendor/bin/behat
 
 before_script:
     - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac
