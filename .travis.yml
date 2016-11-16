@@ -32,10 +32,19 @@ install:
     - mkdir -p build/logs
     - bin/console doctrine:database:create -n --env=test
     - bin/console doctrine:schema:update --force -n --env=test
+    - ./vendor/bin/behat
+
+before_script:
+    - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac
+    - export DISPLAY=:99
+    - sleep 4
+    - nohup bash -c "./vendor/bin/selenium-server-standalone 2>&1 &" && sleep 10; cat nohup.out
+    - nohup bash -c "npm start 2>&1 &" && sleep 10; cat nohup.out
 
 script:
     - ./vendor/bin/phpunit --coverage-text --coverage-clover=./build/clover-phpunit.xml
     - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]]; then ./vendor/bin/phpspec run ; fi
+    - ./vendor/bin/behat
     - cd frontend
     - npm test -- --coverage
     - cd $TRAVIS_BUILD_DIR

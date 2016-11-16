@@ -1,0 +1,32 @@
+default:
+    formatters:
+        pretty:
+            verbose:  true
+            paths:    false
+            snippets: true
+
+    suites:
+        defaults:
+            contexts:
+                - Behat\MinkExtension\Context\MinkContext
+                - Demo\Behat\Context\CoreContext
+                - Demo\Behat\Context\UserContext
+
+    extensions:
+        Behat\MinkExtension:
+            base_url:   "http://localhost:8000/"
+            default_session: chrome
+            sessions:
+                chrome:
+                    selenium2:
+                        browser: chrome
+                        wd_host: "http://localhost:4444/wd/hub"
+                        capabilities:
+                            browserName: chrome
+                            browser: chrome
+                            version: ""
+                            chrome:
+                                switches:
+                                    - "start-fullscreen"
+                                    - "start-maximized"
+                                    - "no-sandbox"
