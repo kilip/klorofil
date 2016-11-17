@@ -40,8 +40,9 @@ class CoreContext implements MinkAwareContext
      */
     public function iWaitAjaxCall()
     {
-        $this->mink->getSession()->wait(5000, '(typeof(jQuery)=="undefined" || (0 === jQuery.active && 0 === jQuery(\':animated\').length))');
-        sleep(1);
+        //$this->mink->getSession()->wait(5000, '(typeof(jQuery)=="undefined" || (0 === jQuery.active && 0 === jQuery(\':animated\').length))');
+        //sleep(1);
+        $this->mink->getSession()->wait(5000);
     }
 
 }
